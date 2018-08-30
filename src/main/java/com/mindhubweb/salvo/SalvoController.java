@@ -39,24 +39,16 @@ public class SalvoController {
         return dto;
     }
 
-/*
+
     @GetMapping("/game_view/{gamePlayerId}")
-    public Map<String, Object> getGamePlayers(@PathVariable Long gamePlayerId){
-        return gamePlayerRepository
+    public ResponseEntity<Map<String, Object>> getGamePlayers(@PathVariable Long gamePlayerId, Authentication authentication){
+        if(!authentication.getName().equals(gamePlayerRepository.findById(gamePlayerId).get().getPlayer().getUserName())){
+            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(gamePlayerRepository
                 .findById(gamePlayerId)
                 .get()
-                .gamePlayerDTO();
-    }*/
-
-    @GetMapping("/game_view/{gamePlayerId}")
-    public ResponseEntity<Map<String, Object>> getGamePlayers(@PathVariable Long gamePlayerId, Authentication authentication, @RequestParam GamePlayer gamePlayer){
-        if(authentication.getName().equals(gamePlayer.getPlayer().getUserName())){
-            return new ResponseEntity<>(gamePlayerRepository
-                    .findById(gamePlayerId)
-                    .get()
-                    .gamePlayerDTO(), HttpStatus.CREATED);
-        }
-
+                .gamePlayerDTO(), HttpStatus.OK);
     }
 
     @PostMapping("/players")
