@@ -1,0 +1,118 @@
+.guest-bkg{
+    background-image: url(images/thumb-1920-42470.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.aut-bkg{
+    background-image: url(images/wallpaper_autobots_2.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position:center;
+}
+
+.dec-bkg{
+    background-image: url(images/wallpaper_decepticons_3.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.gamevw-aut-bkg{
+    background-image: url(images/aut_vs_dec.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.gamevw-dec-bkg{
+   background-image: url(images/dec_vs_aut.jpg);
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center;
+}
+
+.img-title{
+    width: 50%;
+}
+
+.vs{
+    width: 3%;
+}
+
+.card{
+    background-color: hsla(0,0%,100%,.5);
+}
+
+.grid{
+    width: 90%;
+    font-size: 70%;
+}
+
+.col-header{
+    font-weight: bold;
+}
+
+.col-header, th{
+    text-align: center;
+}
+
+.trf{
+    background-color: blue;
+    border-radius: 25%;
+}
+
+.trf.trf-aut{
+    background-image: url("images/AutobotsIcon.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.trf.trf-dec{
+    background-image: url("images/Decepticon.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.trf-down{
+     background-color: red;
+     border-radius: 25%;
+     text-align: center;
+     font-weight: bold;
+}
+
+.salvo{
+    background-color: orange;
+    border-radius: 25%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.hidden{
+    display: none;
+}
+
+.trf-icon{
+    width: 50px;
+    height: 50px;
+}
+
+.side-field{
+    visibility: hidden;
+}
+
+.welcome-dec{
+    background-color: #2E0854;
+    color: white;
+}
+
+.welcome-aut{
+    background-color: #CD0000;
+    color: white;
+}
+
+.miniature{
+    width: 200px;
+}

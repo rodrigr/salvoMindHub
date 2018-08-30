@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="297mm"
+   height="210mm"
+   viewBox="0 0 297 210"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="CB_title.svg">
+  <defs
+     id="defs2">
+    <linearGradient
+       id="linearGradient2267"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#bcc6cc;stop-opacity:1;"
+         offset="0"
+         id="stop2265" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient823"
+       osb:paint="gradient">
+      <stop
+         style="stop-color:#bcc6cc;stop-opacity:1;"
+         offset="0"
+         id="stop819" />
+      <stop
+         style="stop-color:#bcc6cc;stop-opacity:0;"
+         offset="1"
+         id="stop821" />
+    </linearGradient>
+    <meshgradient
+       inkscape:collect="always"
+       id="meshgradient2443"
+       gradientUnits="userSpaceOnUse"
+       x="-46.738064"
+       y="179.86388"
+       type="bicubic">
+      <meshrow
+         id="meshrow2457">
+        <meshpatch
+           id="meshpatch2459">
+          <stop
+             path="c 139.481,0  278.961,0  418.442,0"
+             style="stop-color:#ffffff;stop-opacity:1"
+             id="stop2461" />
+          <stop
+             path="c 0,15.0029  0,30.0059  0,45.0088"
+             style="stop-color:#bcc6cc;stop-opacity:1"
+             id="stop2463" />
+          <stop
+             path="c -139.481,0  -278.961,0  -418.442,0"
+             style="stop-color:#ffffff;stop-opacity:1"
+             id="stop2465" />
+          <stop
+             path="c 0,-15.0029  0,-30.0059  0,-45.0088"
+             style="stop-color:#bcc6cc;stop-opacity:1"
+             id="stop2467" />
+        </meshpatch>
+      </meshrow>
+    </meshgradient>
+    <meshgradient
+       type="bicubic"
+       y="259.211"
+       x="102.76081"
+       gradientUnits="userSpaceOnUse"
+       id="meshgradient920"
+       inkscape:collect="always"
+       gradientTransform="translate(24.522358,-14.197154)">
+      <meshrow
+         id="meshrow922">
+        <meshpatch
+           id="meshpatch924">
+          <stop
+             path="c 17.2641,0  34.5281,0  51.7922,0"
+             style="stop-color:#ffffff;stop-opacity:1"
+             id="stop926" />
+          <stop
+             path="c 0,10.6341  0,21.2683  0,31.9024"
+             style="stop-color:#bcc6cc;stop-opacity:1"
+             id="stop928" />
+          <stop
+             path="c -17.2641,0  -34.5281,0  -51.7922,0"
+             style="stop-color:#ffffff;stop-opacity:1"
+             id="stop930" />
+          <stop
+             path="c 0,-10.6341  0,-21.2683  0,-31.9024"
+             style="stop-color:#bcc6cc;stop-opacity:1"
+             id="stop932" />
+        </meshpatch>
+      </meshrow>
+    </meshgradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.41"
+     inkscape:cx="449.91742"
+     inkscape:cy="381.47745"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-87)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.7555542px;line-height:1.25;font-family:Transformers;-inkscape-font-specification:'Transformers Bold';letter-spacing:0px;word-spacing:0px;fill:url(#meshgradient2443);fill-opacity:1;stroke:#000000;stroke-width:1.365;stroke-miterlimit:4;stroke-dasharray:none"
+       x="-47.754063"
+       y="211.81708"
+       id="text817"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan815"
+         x="-47.754063"
+         y="211.81708"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:50.79999924px;font-family:Transformers;-inkscape-font-specification:'Transformers Bold';stroke-width:1.365;fill:url(#meshgradient2443);fill-opacity:1;stroke:#000000;stroke-miterlimit:4;stroke-dasharray:none">Cybertron battle</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.7555542px;line-height:1.25;font-family:Transformers;-inkscape-font-specification:Transformers;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="80.020325"
+       y="275.05896"
+       id="text860"><tspan
+         sodipodi:role="line"
+         id="tspan858"
+         x="80.020325"
+         y="294.07965"
+         style="stroke-width:0.26458332" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.7555542px;line-height:1.25;font-family:Transformers;-inkscape-font-specification:'Transformers Bold';letter-spacing:0px;word-spacing:0px;fill:url(#meshgradient920);fill-opacity:1;stroke:#000000;stroke-width:0.665;stroke-miterlimit:4;stroke-dasharray:none"
+       x="126.62276"
+       y="276.76385"
+       id="text817-6"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan815-3"
+         x="126.62276"
+         y="276.76385"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25.39999962px;font-family:Transformers;-inkscape-font-specification:'Transformers Bold';fill:url(#meshgradient920);fill-opacity:1;stroke:#000000;stroke-width:0.665;stroke-miterlimit:4;stroke-dasharray:none">Vs</tspan></text>
+  </g>
+</svg>
