@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import java.util.stream.Collectors;
@@ -39,6 +40,19 @@ public class SalvoController {
         return dto;
     }
 
+    @PostMapping("/games")
+    public ResponseEntity<Map<String, Object>> createGames (Authentication authentication){
+        if (isGuest(authentication)){
+            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+        }
+        Player player = playerRepository.findByUserName(authentication.getName());
+        Game newGame = gameRepository.save(new Game(LocalDateTime.now()));
+
+        GamePlayer newGamePlayer = gamePlayerRepository.save(new GamePlayer(newGame, player));
+
+        return  new ResponseEntity<>(makeMap("gpid", newGamePlayer.getId()), HttpStatus.CREATED);
+    }
+
 
     @GetMapping("/game_view/{gamePlayerId}")
     public ResponseEntity<Map<String, Object>> getGamePlayers(@PathVariable Long gamePlayerId, Authentication authentication){
@@ -68,6 +82,10 @@ public class SalvoController {
         Map<String, Object> map = new HashMap<>();
         map.put(key, value);
         return map;
+    }
+
+    private boolean isGuest(Authentication authentication) {
+        return authentication == null || authentication instanceof AnonymousAuthenticationToken;
     }
 
 }

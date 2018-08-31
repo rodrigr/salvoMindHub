@@ -40,6 +40,11 @@ public class GamePlayer {
         this.addSalvoes(salvoes);
     }
 
+    public GamePlayer(Game game, Player player){
+        this.game = game;
+        this.player = player;
+    }
+
     public long getId() {
         return id;
     }

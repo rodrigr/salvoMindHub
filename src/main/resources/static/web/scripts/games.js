@@ -10,6 +10,7 @@ function getData(){
         makeStats();
         toggleButtons();
         bkg();
+        createGameButton();
     });
 }
 
@@ -190,4 +191,24 @@ function clear(){
     $(".side-field").prop("checked", false);
     $("#megatron").hide()
     $("#optimus").hide()
+}
+
+function createGameButton(){
+    if (app.gameData.player != "guest"){
+        $("#create-btn").show();
+    } else {
+        $("#create-btn").hide();
+    }
+}
+
+$("#create-btn").click(createGame)
+
+function createGame(){
+    $.post("/api/games")
+    .done(function(data){
+        window.location.replace("/web/game.html?gp="+data.gpid)
+    })
+    .fail(function(){
+        alert("something went wrong creating the game")
+    })
 }

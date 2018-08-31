@@ -72,6 +72,9 @@
         <div class="container-fluid">
             <div id="app" class="row">
                     <div class="col-5 card p-4 mx-auto d-block">
+                        <div>
+                            <button class="btn btn-success hidden" id="create-btn">Create Game</button>
+                        </div>
                         <ul class="games-list">
                             <li v-for="game in gameData.games" class="pt-2">Game no. {{game.id}} created on {{game.created}}
                                 <br>
