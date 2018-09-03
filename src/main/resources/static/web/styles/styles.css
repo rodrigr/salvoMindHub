@@ -116,3 +116,17 @@
 .miniature{
     width: 200px;
 }
+
+.aut-user{
+    padding-left: 25px;
+    background-image: url(images/autobots-icon-red.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.dec-user{
+    padding-left: 25px;
+    background-image: url(images/decepticons-icon-lila.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}

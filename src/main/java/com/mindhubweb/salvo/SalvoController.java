@@ -56,11 +56,17 @@ public class SalvoController {
 
     @GetMapping("/game_view/{gamePlayerId}")
     public ResponseEntity<Map<String, Object>> getGamePlayers(@PathVariable Long gamePlayerId, Authentication authentication){
-        if(!authentication.getName().equals(gamePlayerRepository.findById(gamePlayerId).get().getPlayer().getUserName())){
+        if(isGuest(authentication)){
             return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity<>(gamePlayerRepository
-                .findById(gamePlayerId)
+        Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
+        if(!gamePlayer.isPresent()){
+            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_GAME_DOES_NOT_EXIST), HttpStatus.BAD_REQUEST);
+        }
+        if(!authentication.getName().equals(gamePlayer.get().getPlayer().getUserName())){
+            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(gamePlayer
                 .get()
                 .gamePlayerDTO(), HttpStatus.OK);
     }
@@ -76,6 +82,25 @@ public class SalvoController {
         }
         Player newPlayer = playerRepository.save(new Player(username, side, password));
         return new ResponseEntity<>(makeMap("username", newPlayer.getUserName()), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/game/{gameId}/players")
+    public ResponseEntity<Map<String, Object>> joinGame(@PathVariable Long gameId, Authentication authentication){
+        if(isGuest(authentication)){
+            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+        }
+        Optional<Game> game = gameRepository.findById(gameId);
+        if(!game.isPresent()){
+            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_GAME_DOES_NOT_EXIST), HttpStatus.FORBIDDEN);
+        }
+        if(game.get().getGamePlayers().size() > 1){
+            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_GAME_FULL), HttpStatus.FORBIDDEN);
+        }
+
+        Player player = playerRepository.findByUserName(authentication.getName());
+        GamePlayer newGamePlayer = gamePlayerRepository.save(new GamePlayer(game.get(), player));
+
+        return new ResponseEntity<>(makeMap("gpid", newGamePlayer.getId()), HttpStatus.CREATED);
     }
 
     private Map<String, Object> makeMap(String key, Object value) {

@@ -131,11 +131,19 @@ function toggleButtons(){
     if(app.gameData.player == "guest"){
         $("#logout-btn").addClass("hidden");
         $("#nav-login").removeClass("hidden");
-        $("#welcome").html("");
+        $("#user").html("");
+        $("#user").removeClass("aut-user").removeClass("dec-user")
     } else {
         $("#nav-login").addClass("hidden");
         $("#logout-btn").removeClass("hidden");
-        $("#welcome").html(app.gameData.player.email);
+        $("#user").html(app.gameData.player.email);
+        $("#user").addClass(function(){
+            if(app.gameData.player.side === "AUTOBOTS"){
+                return "aut-user";
+            } else if (app.gameData.player.side === "DECEPTICONS"){
+                return "dec-user"
+            }
+        })
     }
 }
 
@@ -209,6 +217,16 @@ function createGame(){
         window.location.replace("/web/game.html?gp="+data.gpid)
     })
     .fail(function(){
-        alert("something went wrong creating the game")
+        $("#error-msg").html("something went wrong creating the game")
     })
 }
+
+$("#app").on("click", ".join-btn", function(){
+    $.post("/api/game/"+$(this).attr("data-game")+"/players")
+    .done(function(data){
+        window.location.replace("/web/game.html?gp="+data.gpid)
+    })
+    .fail(function(){
+        $("#error-msg").html("something went wrong joining the game")
+    })
+})
