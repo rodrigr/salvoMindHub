@@ -9,9 +9,14 @@
 </head>
 <body>
     <header>
+        <nav class="nav justify-content-end text-light mt-2">
+            <div>
+                <span id="user" class="font-weight-bold"></span>
+                <button type="button" id="logout-btn" class="btn btn-warning mx-2">Logout</button>
+            </div>
+        </nav>
         <div class="head-title text-light text-center p-4">
             <img src="styles/images/CB_title.png" alt="title-logo" class="img-title">
-            <button type="button" id="logout-btn" class="btn btn-warning float-right mx-2">Logout</button>
         </div>
     </header>
     <section>
@@ -24,11 +29,11 @@
                         <span id="p2"></span>
                     </h3>
                 </div>
-                <div class="card mx-auto d-block p-2 col-md-5 col-12" id="transformers-field">
+                <div class="card mx-auto d-block p-4 col-md-5 col-12" id="transformers-field">
                     <div class="text-center">
                         <h4>Your Transformers</h4>
                     </div>
-                    <table class="grid mx-auto table table-bordered">
+                    <table class="grid mx-auto table-sm table-bordered">
                         <thead>
                         <tr class="grid-head">
 
@@ -39,11 +44,11 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card mx-auto d-block p-2 col-md-5 col-12" id="salvoes-field">
+                <div class="card mx-auto d-block p-4 col-md-5 col-12" id="salvoes-field">
                     <div class="text-center">
                         <h4>Your Salvoes</h4>
                     </div>
-                    <table class="grid mx-auto table table-bordered">
+                    <table class="grid mx-auto table-sm table-bordered">
                         <thead>
                         <tr class="grid-head">
 

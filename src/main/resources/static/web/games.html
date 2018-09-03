@@ -77,8 +77,9 @@
         <div class="container-fluid">
             <div id="app" class="row">
                     <div class="mx-auto d-block col-md-5 col-12 card p-4 mx-auto d-block">
-                        <div>
-                            <button class="btn btn-success hidden" id="create-btn">Create Game</button>
+                        <div class="row">
+                            <h3 class="border border-top-0 border-left-0 border-right-0 border-dark col-6">Games</h3>
+                            <button class="btn-lg btn-success hidden col-4 mx-auto" id="create-btn">New Game</button>
                         </div>
                         <ul class="games-list">
                             <li v-for="game in gameData.games" class="pt-2">Game no. {{game.id}} created on {{game.created}}
@@ -88,7 +89,7 @@
                                     <li v-for="i in game.gamePlayer">
                                         {{i.player.email}}
                                         <a v-if="i.player.id === gameData.player.id" :href="'/web/game.html?gp='+i.id"><button class="btn-sm btn-primary">Enter Game</button></a>
-                                        <button v-else-if="i.player.id != gameData.player.id && game.gamePlayer.length < 2 && gameData.player != 'guest'" :data-game="game.id" class="btn-sm btn-success join-btn">Join Game</button>
+                                        <button v-else-if="i.player.id != gameData.player.id && game.gamePlayer.length < 2 && gameData.player != 'guest'" :data-game="game.id" class="btn-sm btn-dark join-btn">Join Game</button>
                                         <span id="error-msg"></span>
                                     </li>
                                 </ul>
@@ -96,7 +97,7 @@
                         </ul>
                     </div>
                     <div class="mx-auto d-block col-md-5 col-12 card p-4 mx-auto d-block table-responsive">
-                        <h4 class="text-center">Top Players</h4>
+                        <h3>Top Players</h3>
                         <table class="table table-hover table-borderless border border-dark">
                             <thead>
                             <tr class="border border-dark">

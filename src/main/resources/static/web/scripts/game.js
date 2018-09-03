@@ -21,6 +21,12 @@ function getPlayers(pl){
     for (var i in gridData.gamePlayer){
         if (pl == gridData.gamePlayer[i].id){
             $("#p1").html(gridData.gamePlayer[i].player.email+" (you)")
+            $("#user").html(gridData.gamePlayer[i].player.email)
+            if(gridData.gamePlayer[i].player.side === "AUTOBOTS"){
+                $("#user").addClass("aut-user").removeClass("dec-user")
+            } else if (gridData.gamePlayer[i].player.side === "DECEPTICONS"){
+                $("#user").addClass("dec-user").removeClass("aut-user")
+            }
         } else if (pl != gridData.gamePlayer[i].id) {
             $("#p2").html(" "+gridData.gamePlayer[i].player.email+ "")
         }

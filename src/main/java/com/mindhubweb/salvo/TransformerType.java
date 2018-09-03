@@ -1,0 +1,5 @@
+package com.mindhubweb.salvo;
+
+public enum TransformerType {
+    OPTIMUS_PRIME, IRONHIDE, BUMBLEBEE, RATCHET, JAZZ, MEGATRON, STARSCREAM, BLACKOUT, DEVASTATOR, BARRICADE
+}
