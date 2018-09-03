@@ -43,7 +43,7 @@ public class SalvoController {
     @PostMapping("/games")
     public ResponseEntity<Map<String, Object>> createGames (Authentication authentication){
         if (isGuest(authentication)){
-            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
         }
         Player player = playerRepository.findByUserName(authentication.getName());
         Game newGame = gameRepository.save(new Game(LocalDateTime.now()));
@@ -57,14 +57,14 @@ public class SalvoController {
     @GetMapping("/game_view/{gamePlayerId}")
     public ResponseEntity<Map<String, Object>> getGamePlayers(@PathVariable Long gamePlayerId, Authentication authentication){
         if(isGuest(authentication)){
-            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
         }
         Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
         if(!gamePlayer.isPresent()){
-            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_GAME_DOES_NOT_EXIST), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_GAME_DOES_NOT_EXIST), HttpStatus.BAD_REQUEST);
         }
         if(!authentication.getName().equals(gamePlayer.get().getPlayer().getUserName())){
-            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(gamePlayer
                 .get()
@@ -74,11 +74,11 @@ public class SalvoController {
     @PostMapping("/players")
     public ResponseEntity<Map<String, Object>> createPlayer(@RequestParam String username, @RequestParam Side side, @RequestParam String password) {
         if (username.isEmpty() || password.isEmpty() || (side != Side.AUTOBOTS && side != Side.DECEPTICONS)) {
-            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_BAD_REQUEST), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_BAD_REQUEST), HttpStatus.BAD_REQUEST);
         }
         Player player = playerRepository.findByUserName(username);
         if (player != null) {
-            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_CONFLICT), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_CONFLICT), HttpStatus.CONFLICT);
         }
         Player newPlayer = playerRepository.save(new Player(username, side, password));
         return new ResponseEntity<>(makeMap("username", newPlayer.getUserName()), HttpStatus.CREATED);
@@ -87,20 +87,39 @@ public class SalvoController {
     @PostMapping("/game/{gameId}/players")
     public ResponseEntity<Map<String, Object>> joinGame(@PathVariable Long gameId, Authentication authentication){
         if(isGuest(authentication)){
-            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
         }
         Optional<Game> game = gameRepository.findById(gameId);
         if(!game.isPresent()){
-            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_GAME_DOES_NOT_EXIST), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_GAME_DOES_NOT_EXIST), HttpStatus.FORBIDDEN);
         }
         if(game.get().getGamePlayers().size() > 1){
-            return new ResponseEntity<>(makeMap(ErrorMessages.KEY_ERROR, ErrorMessages.MSG_ERROR_GAME_FULL), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_GAME_FULL), HttpStatus.FORBIDDEN);
         }
 
         Player player = playerRepository.findByUserName(authentication.getName());
         GamePlayer newGamePlayer = gamePlayerRepository.save(new GamePlayer(game.get(), player));
 
         return new ResponseEntity<>(makeMap("gpid", newGamePlayer.getId()), HttpStatus.CREATED);
+    }
+
+    @PostMapping("games/players/{gamePlayerId}/transformers")
+    public ResponseEntity<Map<String, Object>> transformersList(@PathVariable Long gamePlayerId, Authentication authentication, @RequestBody Transformer transformer){
+        if(isGuest(authentication)){
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+        }
+        Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
+        if(!gamePlayer.isPresent()){
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_GAME_DOES_NOT_EXIST), HttpStatus.BAD_REQUEST);
+        }
+        if(!gamePlayer.get().getPlayer().getUserName().equals(authentication.getName())){
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+        }
+        if(gamePlayer.get().getTransformers().size() > 0){
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_PLACED_TRFS), HttpStatus.FORBIDDEN);
+        }
+        gamePlayer.get().addTransformer(transformer);
+        return  new ResponseEntity<>(makeMap(Messages.KEY_CREATED, Messages.MSG_CREATED), HttpStatus.CREATED);
     }
 
     private Map<String, Object> makeMap(String key, Object value) {
