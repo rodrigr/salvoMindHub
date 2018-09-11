@@ -2,6 +2,7 @@
     background-image: url(images/thumb-1920-42470.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
 }
 
 .aut-bkg{
@@ -129,3 +130,120 @@
     background-size: contain;
     background-repeat: no-repeat;
 }
+
+
+
+#optimus-vh{
+    width: 210px;
+    height: 40px;
+}
+
+#optimus-vh-vertical{
+    width: 40px;
+    height: 210px;
+}
+
+#bumblebee-vh{
+    width: 165px;
+    height: 40px;
+}
+
+#bumblebee-vh-vertical{
+    width: 40px;
+    height: 165px;
+}
+
+#ironhide-vh{
+    width: 130px;
+    height: 40px;
+}
+
+#ironhide-vh-vertical{
+    width: 40px;
+    height: 130px;
+}
+
+#ratchet-vh{
+    width: 130px;
+    height: 40px;
+}
+
+#ratchet-vh-vertical{
+    width: 40px;
+    height: 130px;
+}
+
+#sideswipe-vh{
+    width: 85px;
+    height: 40px;
+}
+
+#sideswipe-vh-vertical{
+    width: 40px;
+    height: 85px;
+}
+
+#brawl-vh{
+  width: 210px;
+  height: 40px;
+}
+
+#brawl-vh-vertical{
+  width: 40px;
+  height: 210px;
+}
+
+#blackout-vh{
+    width: 115px;
+    height: 40px;
+}
+
+#blackout-vh-vertical{
+    width: 40px;
+    height: 115px;
+}
+
+#megatron-vh{
+    width: 115px;
+    height: 40px;
+}
+
+#megatron-vh-vertical{
+    width: 40px;
+    height: 115px;
+}
+
+#barricade-vh{
+    width: 150px;
+    height: 40px;
+}
+
+#barricade-vh-vertical{
+    width: 40px;
+    height: 150px;
+}
+
+#starscream-vh{
+    width: 85px;
+    height: 40px;
+}
+
+#starscream-vh-vertical{
+    width: 40px;
+    height: 85px;
+}
+
+
+
+
+#transformers-field .grid td, #transformers-field .grid th{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+
+}
+
+#transformers-field .grid{
+    width: 442px;
+}
+

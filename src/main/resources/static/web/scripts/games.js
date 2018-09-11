@@ -214,7 +214,7 @@ $("#create-btn").click(createGame)
 function createGame(){
     $.post("/api/games")
     .done(function(data){
-        window.location.replace("/web/game.html?gp="+data.gpid)
+        window.location.href = "/web/game.html?gp="+data.gpid
     })
     .fail(function(){
         $("#error-msg").html("something went wrong creating the game")

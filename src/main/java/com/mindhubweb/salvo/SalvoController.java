@@ -104,7 +104,7 @@ public class SalvoController {
     }
 
     @PostMapping("games/players/{gamePlayerId}/transformers")
-    public ResponseEntity<Map<String, Object>> transformersList(@PathVariable Long gamePlayerId, Authentication authentication, @RequestBody Transformer transformer){
+    public ResponseEntity<Map<String, Object>> addTransformers(@PathVariable Long gamePlayerId, Authentication authentication, @RequestBody Set<Transformer> transformerSet){
         if(isGuest(authentication)){
             return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
         }
@@ -115,10 +115,11 @@ public class SalvoController {
         if(!gamePlayer.get().getPlayer().getUserName().equals(authentication.getName())){
             return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
         }
-        if(gamePlayer.get().getTransformers().size() > 0){
+        if(gamePlayer.get().getTransformers().size() > 0 || transformerSet.size() != 5){
             return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_PLACED_TRFS), HttpStatus.FORBIDDEN);
         }
-        gamePlayer.get().addTransformer(transformer);
+        gamePlayer.get().addTransformers(transformerSet);
+        gamePlayerRepository.save(gamePlayer.get());
         return  new ResponseEntity<>(makeMap(Messages.KEY_CREATED, Messages.MSG_CREATED), HttpStatus.CREATED);
     }
 

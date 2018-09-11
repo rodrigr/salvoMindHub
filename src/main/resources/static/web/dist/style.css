@@ -1,0 +1,47 @@
+.grid-stack-item-content {
+    opacity: 0.9;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+}
+
+
+.none{
+	background-image: url('grid-bkg.png');
+	background-size: cover;
+}
+
+.aut-vs-dec{
+	background-image: url('grid-bkg.png'), url('aut_vs_dec_bkg.jpg');
+	background-size: cover;
+}
+
+.desert{
+  background-image: url('grid-bkg.png'), url('desert-bkg.gif');
+  background-size: cover;
+}
+
+.cybertron{
+  background-image: url('grid-bkg.png'), url('cybertron-bkg.gif');
+  background-size: cover;
+}
+
+.earth{
+  background-image: url('grid-bkg.png'), url('earth-bkg.webp');
+  background-size: cover;
+}
+
+.tunnel{
+  background-image: url('grid-bkg.png'), url('tunnel-bkg.gif');
+  background-size: cover;
+}
+
+.grid-ships{
+    
+    height: 495px;
+    width: 495px;
+    padding-top: 45px;
+    padding-left: 45px;
+
+}

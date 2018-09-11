@@ -45,6 +45,10 @@ public class GamePlayer {
         this.player = player;
     }
 
+    public GamePlayer(Set<Transformer> transformers){
+        this.addTransformers(transformers);
+    }
+
     public long getId() {
         return id;
     }
