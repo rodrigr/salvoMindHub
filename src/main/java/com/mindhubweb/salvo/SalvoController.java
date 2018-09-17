@@ -123,6 +123,36 @@ public class SalvoController {
         return  new ResponseEntity<>(makeMap(Messages.KEY_CREATED, Messages.MSG_CREATED), HttpStatus.CREATED);
     }
 
+    @PostMapping("games/players/{gamePlayerId}/salvoes")
+    public ResponseEntity<Map<String, Object>> addSalvoes(@PathVariable Long gamePlayerId, Authentication authentication, @RequestBody Salvo salvo){
+        if(isGuest(authentication)){
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+        }
+        Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
+        if(!gamePlayer.isPresent()){
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_GAME_DOES_NOT_EXIST), HttpStatus.BAD_REQUEST);
+        }
+        if(!gamePlayer.get().getPlayer().getUserName().equals(authentication.getName())){
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+        }
+
+        if(gamePlayer.get().getSalvoes().stream().anyMatch(item -> item.getTurn() == salvo.getTurn()) ){
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+        }
+
+        Optional<GamePlayer> opponentGamePlayer = gamePlayer.get().getGame().getGamePlayers().stream().filter(gp -> gp.getId() != gamePlayerId).findFirst();
+
+        if(!opponentGamePlayer.isPresent() || salvo.getTurn() -1 > opponentGamePlayer.get().getSalvoes().size()){
+            return  new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+        }
+
+        Set<Salvo> salvoSet = new HashSet<>();
+        salvoSet.add(salvo);
+        gamePlayer.get().addSalvoes(salvoSet);
+        gamePlayerRepository.save(gamePlayer.get());
+        return  new ResponseEntity<>(makeMap(Messages.KEY_CREATED, Messages.MSG_CREATED), HttpStatus.CREATED);
+    }
+
     private Map<String, Object> makeMap(String key, Object value) {
         Map<String, Object> map = new HashMap<>();
         map.put(key, value);

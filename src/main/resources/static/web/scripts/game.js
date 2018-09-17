@@ -48,7 +48,10 @@ function getCurrentPlayerData(){
         currentPlayerData = data.player;
         bkg();
         newGame();
+        createSalvoesGrid();
         createGrid();
+        getTurn();
+        dinamicData();
    })
 }
 
@@ -111,6 +114,14 @@ function changeBkg(){
       .removeClass("earth")
       .removeClass("tunnel")
       .addClass($(this).val());
+    $("#salvoes-table")
+      .removeClass("none-noGrid")
+      .removeClass("aut-vs-dec-noGrid")
+      .removeClass("desert-noGrid")
+      .removeClass("cybertron-noGrid")
+      .removeClass("earth-noGrid")
+      .removeClass("tunnel-noGrid")
+      .addClass($(this).val()+"-noGrid");
   })
 }
 
@@ -119,26 +130,14 @@ changeBkg();
 function newGame(){
     if(gridData.transformers.length === 0){
         $("#new-game-form").show();
-        if (currentPlayerData.side === "DECEPTICONS" ){
-          $("#optimus-vh").attr("src", "styles/images/brawl_vh.png").attr("id", "brawl-vh").attr("alt", "brawl");
-          $("#bumblebee-vh").attr("src", "styles/images/barricade_vh.png").attr("id", "barricade-vh").attr("alt", "barricade");
-          $("#ironhide-vh").attr("src", "styles/images/megatron_vh.png").attr("id", "megatron-vh").attr("alt", "megatron");
-          $("#ratchet-vh-vertical").attr("src", "styles/images/blackout_vh_vertical.png").attr("id", "blackout-vh-vertical").attr("alt", "blackout");
-          $("#sideswipe-vh-vertical").attr("src", "styles/images/starscream_vh_vertical.png").attr("id", "starscream-vh-vertical").attr("alt", "starscream");
-        }
+        $("#salvoes-field").hide();
     } else{
         $("#new-game-form").hide();
-        if (currentPlayerData.side === "DECEPTICONS" ){
-          $("#optimus-vh").attr("src", "styles/images/brawl_vh.png").attr("id", "brawl-vh").attr("alt", "brawl");
-          $("#bumblebee-vh").attr("src", "styles/images/barricade_vh.png").attr("id", "barricade-vh").attr("alt", "barricade");
-          $("#ironhide-vh").attr("src", "styles/images/megatron_vh.png").attr("id", "megatron-vh").attr("alt", "megatron");
-          $("#ratchet-vh-vertical").attr("src", "styles/images/blackout_vh_vertical.png").attr("id", "blackout-vh-vertical").attr("alt", "blackout");
-          $("#sideswipe-vh-vertical").attr("src", "styles/images/starscream_vh_vertical.png").attr("id", "starscream-vh-vertical").attr("alt", "starscream");
-        }
+        $("#salvoes-field").show();
     }
 }
 
-
+//Function to change positions from vertical to horizontal and vice versa.
 
 function changePositions(trfId, trf){
         $("#place-field").on('dblclick', trfId, function(){
@@ -147,11 +146,11 @@ function changePositions(trfId, trf){
           var height = parseInt($(this).parent().attr("data-gs-height"));
           var x = parseInt($(this).parent().attr("data-gs-x"));
           var y = parseInt($(this).parent().attr("data-gs-y"));
-          var id = $(this).attr('id');
-          if(id === trf+"-vh-vertical"){
+          
+          if(height > width){
             for (var i = 0; i < height-1; i++){
             
-              if ($(this).parent().attr("data-gs-x") == 9-i){
+              if (x == 9-i){
                 return $("#error-msg").html("Careful! "+$(this).attr("alt")+" will fall out of the grid.");
               }
               if(grid.isAreaEmpty(x+1+i, y) == false){
@@ -162,9 +161,9 @@ function changePositions(trfId, trf){
             grid.resize($(this).parent(), height, width);
             
           }
-          if(id === trf+"-vh"){
+          if(width > height){
             for (var i = 0; i < width-1; i++){
-              if ($(this).parent().attr("data-gs-y") == 9-i){
+              if (y == 9-i){
                 return $("#error-msg").html("Careful! "+$(this).attr("alt")+" will fall out of the grid.");
               }
               if(grid.isAreaEmpty(x, y+1+i) == false){
@@ -192,7 +191,7 @@ function createGrid () {
         //separacion entre elementos (les llaman widgets)
         verticalMargin: 0,
         //altura de las celdas
-        cellHeight: 45,
+        cellHeight: 35,
         //desabilitando el resize de los widgets
         disableResize: true,
         //widgets flotantes
@@ -210,6 +209,7 @@ function createGrid () {
       options.staticGrid = false;
       $('.grid-stack').gridstack(options);
       grid = $('#grid').data('gridstack');
+      createTrfs();
       $("#field").attr("id", "place-field");
       changePositions("#optimus-vh", "optimus");
       changePositions("#optimus-vh-vertical", "optimus");
@@ -230,46 +230,46 @@ function createGrid () {
       changePositions("#blackout-vh", "blackout");
       changePositions("#blackout-vh-vertical", "blackout");
       changePositions("#barricade-vh", "barricade");
-      changePositions("#barricade-vh-vertical", "barricade");
-      
-    
-      
+      changePositions("#barricade-vh-vertical", "barricade"); 
       
     } else{
       options.staticGrid = true;
       grid = $('#grid').data('gridstack');
       
       if(typeof grid != 'undefined'){
+        grid.removeAll();
         grid.destroy(false);
       }
       
       $('.grid-stack').gridstack(options);
       grid = $('#grid').data('gridstack');
+      createTrfs();
       $("#place-field").off('dblclick')
       $("#place-field").attr("id", "field");
       getTrfsLocations();
+      //getSalvoesLocations();
     }
   
-   
-/*
-    //agregando un elmento(widget) desde el javascript
-    grid.addWidget($('<div id="carrier2"><div class="grid-stack-item-content carrierHorizontal"></div><div/>'),
-        1, 5, 3, 1, false, 1, 3, 1, 3, "carrier");
+    
 
-    grid.addWidget($('<div id="patroal2"><div class="grid-stack-item-content patroalHorizontal"></div><div/>'),
-        1, 8, 3, 1, false, 1, 3, 1, 3, "carrier");
-*/
-    //verificando si un area se encuentra libre
-    //no está libre, false
-    //console.log(grid.isAreaEmpty(1, 8, 3, 1));
-    //está libre, true
-    //console.log(grid.isAreaEmpty(1, 7, 3, 1));
-
-    //todas las funciones se encuentran en la documentación
-    //https://github.com/gridstack/gridstack.js/tree/develop/doc
 }
 
-
+function createTrfs(){
+  var side = currentPlayerData.side;
+  if (side === "AUTOBOTS"){
+    grid.addWidget($('<div id="5-cells-trf"><img src="styles/images/optimus_vh.png" alt="optimus" id="optimus-vh" class="grid-stack-item-content d-block m-auto"></div>'), 0, 2, 5, 1, false);
+    grid.addWidget($('<div id="4-cells-trf"><img src="styles/images/bumblebee_vh.png" alt="bumblebee" id="bumblebee-vh" class="grid-stack-item-content d-block m-auto"></div>'), 4, 1, 4, 1, false);
+    grid.addWidget($('<div id="3-cells-trf"><img src="styles/images/ironhide_vh.png" alt="ironhide" id="ironhide-vh" class="grid-stack-item-content d-block m-auto"></div>'), 5, 8, 3, 1, false);
+    grid.addWidget($('<div id="3-cells-trf-2"><img src="styles/images/ratchet_vh_vertical.png" alt="ratchet" id="ratchet-vh-vertical" class="grid-stack-item-content d-block m-auto"></div>'), 3, 5, 1, 3, false);
+    grid.addWidget($('<div id="2-cells-trf"><img src="styles/images/sideswipe_vh_vertical.png" alt="sideswipe" id="sideswipe-vh-vertical" class="grid-stack-item-content d-block m-auto"></div>'), 10, 8, 1, 2, false);
+  } else if (side === "DECEPTICONS"){
+    grid.addWidget($('<div id="5-cells-trf"><img src="styles/images/brawl_vh.png" alt="brawl" id="brawl-vh" class="grid-stack-item-content d-block m-auto"></div>'), 0, 2, 5, 1, false);
+    grid.addWidget($('<div id="4-cells-trf"><img src="styles/images/barricade_vh.png" alt="barricade" id="barricade-vh" class="grid-stack-item-content d-block m-auto"></div>'), 4, 1, 4, 1, false);
+    grid.addWidget($('<div id="3-cells-trf"><img src="styles/images/megatron_vh.png" alt="megatron" id="megatron-vh" class="grid-stack-item-content d-block m-auto"></div>'), 5, 8, 3, 1, false);
+    grid.addWidget($('<div id="3-cells-trf-2"><img src="styles/images/blackout_vh_vertical.png" alt="blackout" id="blackout-vh-vertical" class="grid-stack-item-content d-block m-auto"></div>'), 3, 5, 1, 3, false);
+    grid.addWidget($('<div id="2-cells-trf"><img src="styles/images/starscream_vh_vertical.png" alt="starscream" id="starscream-vh-vertical" class="grid-stack-item-content d-block m-auto"></div>'), 10, 8, 1, 2, false);
+  }
+}
 
 function getTrfsLocations (){
   for (var i in gridData.transformers){
@@ -297,4 +297,146 @@ function getTrfsLocations (){
             })
         }
     }
+    getSalvoesLocations();
 }
+
+function createSalvoesGrid (){
+    for (var i=0; i<=10; i++){
+        $(".grid-head").append("<th class='border border-secondary' id='"+i+"'>"+i+"</th>");
+    }
+
+    $("#0").html("")
+
+    for (i=65; i<=74; i++){
+        $(".grid-body").append("<tr class='"+String.fromCharCode(i)+"'><td class='col-header border border-secondary'>"+String.fromCharCode(i)+"</td></tr>");
+    }
+
+    for (var j=1; j<=10; j++){
+        $(".grid-body tr").each(function(){$(this).append("<td class='cell border border-secondary' id='"+$(this).attr("class")+j+"'></td>")})
+    }
+
+
+}
+
+function getSalvoesLocations (){
+    for (var i in gridData.salvoes){
+        for (var j in gridData.salvoes[i].locations){
+            for (var k in gridData.gamePlayer){
+                if (gridData.gamePlayer[k].id == getGpId(url)){
+                    var shot =  gridData.salvoes[i].locations[j];
+                    var x = parseInt(shot.slice(1))-1;
+                    var y = shot.slice(0,1).charCodeAt(0)-65
+                    if (gridData.salvoes[i].player == gridData.gamePlayer[k].player.id){
+                        $("#salvoes-field #" + gridData.salvoes[i].locations[j] + "").addClass("salvo").html(gridData.salvoes[i].turn);
+                    } else if (gridData.salvoes[i].player != gridData.gamePlayer[k].player.id && !grid.isAreaEmpty(x, y)){
+                        $("#grid").append('<div style="position:absolute; top:'+y*35+'px; left:'+x*35+'px" class="trf-down" ></div>');
+                    }
+                }
+            }
+        }
+    }
+}
+
+$("#salvoes-field").on('click', '.cell', function(){
+  if(!$(this).hasClass("salvo") && !$(this).hasClass("targeted")){
+    $(this).addClass("targeted");
+  } else if($(this).hasClass("targeted")){
+    $(this).removeClass("targeted");
+  }
+})
+
+var salvoesData = {};
+
+function addSalvoes(){
+    $.post({
+        url: "/api/games/players/"+getGpId(url)+"/salvoes",
+        data: JSON.stringify(salvoesData),
+        dataType: "text",
+        contentType: "application/json"})
+    .done(function(){
+        console.log("done");
+        getGrid(getGpId(url));
+    })
+    .fail(function(){
+        console.log("fail");
+        $("#error-msg-salvo").html("salvo shoot was not possible");
+    })
+}
+
+
+$("#shoot-btn").click(function(){
+  $("#error-msg-salvo").html("");
+  var arr = [];
+  if($(".targeted").length == 5){
+      $(".cell").each(function(){
+      if($(this).hasClass("targeted") ){
+        arr.push($(this).attr("id"));
+      }
+    })
+
+    salvoesData.turn = getTurn();
+    salvoesData.shots = arr;
+
+    addSalvoes();
+    
+  } else if ($(".targeted").length == 100){
+    $("#grid-container")
+      .removeClass("none")
+      .removeClass("aut-vs-dec")
+      .removeClass("desert")
+      .removeClass("cybertron")
+      .removeClass("earth")
+      .removeClass("tunnel")
+      .addClass("megan-easter");
+    $("#salvoes-table")
+      .removeClass("none-noGrid")
+      .removeClass("aut-vs-dec-noGrid")
+      .removeClass("desert-noGrid")
+      .removeClass("cybertron-noGrid")
+      .removeClass("earth-noGrid")
+      .removeClass("tunnel-noGrid")
+      .addClass("megan-easter-noGrid");
+    $(".cell").each(function(){
+      $(this).removeClass("targeted")
+    });
+    
+  } else if($("#A3, #A4, #A5, #A6, #A7, #A8, #B2, #B9, #C1, #C10,  #D1, #D10, #E1, #E10, #F1, #F10, #G1, #G10, #H1, #H10, #I2, #I9, #A3, #J4, #J5, #J6, #J7, #J8").hasClass("targeted")){
+      $("#salvoes-field div:first").append("<img style='height: 100px' src='styles/images/optimus_dance.gif'>");
+    $(".cell").each(function(){
+      $(this).removeClass("targeted")
+    });
+  }else{
+    $("#error-msg-salvo").html("you need to shoot 5 times")
+  }
+  
+})
+
+function getTurn (){
+  var arr=[]
+  var turn = 0;
+  //gridData.salvoes.map(salvo => (salvo.id == currentPlayerData.id) ? arr.push(salvo.turn));
+  gridData.salvoes.map(function(salvo){
+    if(salvo.player == currentPlayerData.id){
+      arr.push(salvo.turn);
+    }
+  })
+  turn = Math.max.apply(Math, arr);
+  
+  if (turn == -Infinity){
+    return 1;
+  } else {
+    return turn + 1;
+  }
+  
+}
+
+function dinamicData(){
+  $("#turn").html(getTurn());
+  if(currentPlayerData.side == "AUTOBOTS"){
+    $("#team-title").html('<img class="trf-icon" src="styles/images/AutobotsIcon.png">'+currentPlayerData.side+' TEAM');
+  } else if(currentPlayerData.side == "DECEPTICONS"){
+    $("#team-title").html('<img class="trf-icon" src="styles/images/Decepticon.png">'+currentPlayerData.side+' TEAM');
+  }
+  
+}
+

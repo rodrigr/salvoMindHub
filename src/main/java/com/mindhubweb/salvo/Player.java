@@ -6,10 +6,10 @@ package com.mindhubweb.salvo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.List;
+import java.util.*;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+
 import static java.util.stream.Collectors.toList;
 import javax.persistence.CascadeType;
 
@@ -114,6 +114,8 @@ public class Player {
         dto.put("id", this.getId());
         dto.put("email", this.getUserName());
         dto.put("side", this.getSide());
+        double total = this.getScores().stream().mapToDouble(Score::getPoints).sum();
+        dto.put("points", total);
         return dto;
     }
 

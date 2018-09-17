@@ -33,91 +33,55 @@
                         <span id="p2"></span>
                     </h3>
                 </div>
-                <div class="card mx-auto p-4 col-md-5 col-12" id="field">
-                   <div class="form-group">
-                      <label for="bkg-choice" class="font-weight-bold">Choose a battlefield background:</label>
-                      <select name="bkg-choice" id="bkg-choice" class="form-control">
-                        <option value="none">None</option>
-                        <option value="aut-vs-dec">Autobots vs Decepticons</option>
-                        <option value="cybertron">Cybertron</option>
-                        <option value="desert">Desert</option>
-                        <option value="earth">Earth</option>
-                        <option value="tunnel">Tunnel</option>
-                      </select>
-                    </div>
-                   <div id="new-game-form" class="hidden">
-                    <button id="place-btn" class="btn btn-danger d-block mx-auto my-2">Place Transformers</button>
-                    <span id="error-msg" class="text-danger"></span>
-                   </div>
-                    
-                    <div id="grid-container" class="grid-ships mx-auto d-block none">
-                        <!-- div que usa la librería gridstack grid-stack-10 se indica que son 10 columnas-->
-                        <div id="grid" class="grid-stack grid-stack-10">
-                            <!--se agrega un elemento (widget) a la grilla-->
-                            <!--data-gs-x y data-gs-y posicion de inicio -->
-                            <!-- data-gs-width cuantas columnas ocupa data-gs-height cuantas filas ocupa -->
-                            <div id="5-cells-trf" class="grid-stack-item"
-                                 data-gs-x="0" data-gs-y="2"
-                                 data-gs-width="5" data-gs-height="1">
-                                <!--div contenerdor (acá se coloca la imagen de fondo, además se coloca el mouse como una mano, etc..)-->
-                                <img src="styles/images/optimus_vh.png" alt="optimus" id="optimus-vh" class="grid-stack-item-content d-block m-auto">
-                            </div>
-                            <div id="4-cells-trf" class="grid-stack-item"
-                                 data-gs-x="4" data-gs-y="1"
-                                 data-gs-width="4" data-gs-height="1">
-                                <img src="styles/images/bumblebee_vh.png" alt="bumblebee" id="bumblebee-vh" class="grid-stack-item-content d-block m-auto">
-                            </div>
-                            <div id="3-cells-trf" class="grid-stack-item"
-                                 data-gs-x="5" data-gs-y="8"
-                                 data-gs-width="3" data-gs-height="1">
-                                <img src="styles/images/ironhide_vh.png" alt="ironhide" id="ironhide-vh" class="grid-stack-item-content d-block m-auto">
-                            </div>
-                            <div id="3-cells-trf-2" class="grid-stack-item"
-                                 data-gs-x="3" data-gs-y="5"
-                                 data-gs-width="1" data-gs-height="3">
-                                <img src="styles/images/ratchet_vh_vertical.png" alt="ratchet" id="ratchet-vh-vertical" class="grid-stack-item-content d-block m-auto">
-                            </div>
-                            <div id="2-cells-trf" class="grid-stack-item"
-                                 data-gs-x="10" data-gs-y="8"
-                                 data-gs-width="1" data-gs-height="2">
-                                <img src="styles/images/sideswipe_vh_vertical.png" alt="sideswipe" id="sideswipe-vh-vertical" class="grid-stack-item-content d-block m-auto">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--
-                <div class="card mx-auto d-block p-4 col-md-5 col-12" id="transformers-field">
-                    <div class="text-center">
-                        <h4>Your Transformers</h4>
-                    </div>
-                    <table class="grid mx-auto table-sm table-bordered dropzone">
-                        <thead>
-                        <tr class="grid-head">
-
-                        </tr>
-                        </thead>
-                        <tbody class="grid-body" ondrop="drop(event)" ondragover="allowDrop(event)">
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card mx-auto d-block p-4 col-md-5 col-12" id="salvoes-field">
-                    <div class="text-center">
-                        <h4>Your Salvoes</h4>
-                    </div>
-                    <table class="grid mx-auto table-sm table-bordered">
-                        <thead>
-                        <tr class="grid-head">
-
-                        </tr>
-                        </thead>
-                        <tbody class="grid-body">
-
-                        </tbody>
-                    </table>
-                </div>
-                -->
+                
             </div>
+            <div class="row card-bkg w-75 py-4 mb-4 mx-auto">
+                
+                    <div class="col-6" id="field">
+                       <h2 id="team-title" class="font-weight-bold pl-4"></h2>
+                       <div id="new-game-form" class="hidden">
+                        <button id="place-btn" class="btn btn-danger d-block mx-auto my-2">Place Transformers</button>
+                        <span id="error-msg" class="text-danger"></span>
+                       </div>
+                       <div id="grid-container" class="grid-ships mx-auto d-block none">  
+                         <div id="grid" class="grid-stack grid-stack-10">   
+                         </div>
+                       </div>
+                    </div>
+                    <div class="col-5">
+                      <div class="form-group">
+                          <label for="bkg-choice" class="font-weight-bold">Choose a battlefield background:</label>
+                          <select name="bkg-choice" id="bkg-choice" class="form-control">
+                            <option value="none">None</option>
+                            <option value="aut-vs-dec">Autobots vs Decepticons</option>
+                            <option value="cybertron">Cybertron</option>
+                            <option value="desert">Desert</option>
+                            <option value="earth">Earth</option>
+                            <option value="tunnel">Tunnel</option>
+                          </select>
+                        </div>
+                      <div id="salvoes-field">
+                        <div class="my-2">
+                            <h3 class="font-weight-bold">Your Shots</h3>
+                            <span>Turn: </span><span id="turn"></span>
+                            <span class="bg-danger text-light" id="error-msg-salvo"></span>
+                        </div>
+                        <table id="salvoes-table" class="grid mx-auto table-sm table-borderless border border-secondary text-light">
+                            <thead>
+                            <tr class="grid-head">
+
+                            </tr>
+                            </thead>
+                            <tbody class="grid-body">
+
+                            </tbody>
+                        </table>
+                        <button id="shoot-btn" class="btn btn-warning mx-auto d-block mt-2">Shoot!</button>
+                    </div>
+                    </div>
+                    
+                </div>
+            
         </div>
     </section>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

@@ -41,12 +41,17 @@
     width: 3%;
 }
 
-.card{
+.card-bkg, .card{
     background-color: hsla(0,0%,100%,.5);
+    border-radius: 2%;
 }
 
 .grid{
-    width: 90%;
+    width: 100%;
+}
+
+.grid td, .grid th{
+  width: 30px;
 }
 
 .col-header{
@@ -77,11 +82,14 @@
 }
 
 .trf-down{
-     background-color: red;
-     border-radius: 25%;
-     text-align: center;
-     font-weight: bold;
+     width: 35px;
+     height: 35px;
+     background-image: url(images/target-down.gif);
+     background-size: contain;
+     background-position: center;
+     background-repeat: no-repeat;
 }
+
 
 .salvo{
     background-color: orange;
@@ -134,53 +142,53 @@
 
 
 #optimus-vh{
-    width: 210px;
-    height: 40px;
+    width: 160px;
+    height: 30px;
 }
 
 #optimus-vh-vertical{
     width: 40px;
-    height: 210px;
+    height: 160px;
 }
 
 #bumblebee-vh{
-    width: 165px;
-    height: 40px;
+    width: 125px;
+    height: 30px;
 }
 
 #bumblebee-vh-vertical{
-    width: 40px;
-    height: 165px;
+    width: 30px;
+    height: 125px;
 }
 
 #ironhide-vh{
-    width: 130px;
-    height: 40px;
+    width: 90px;
+    height: 30px;
 }
 
 #ironhide-vh-vertical{
-    width: 40px;
-    height: 130px;
+    width: 30px;
+    height: 90px;
 }
 
 #ratchet-vh{
-    width: 130px;
-    height: 40px;
+    width: 90px;
+    height: 30px;
 }
 
 #ratchet-vh-vertical{
-    width: 40px;
-    height: 130px;
+    width: 30px;
+    height: 90px;
 }
 
 #sideswipe-vh{
-    width: 85px;
-    height: 40px;
+    width: 55px;
+    height: 30px;
 }
 
 #sideswipe-vh-vertical{
-    width: 40px;
-    height: 85px;
+    width: 30px;
+    height: 55px;
 }
 
 #brawl-vh{
@@ -195,22 +203,24 @@
 
 #blackout-vh{
     width: 115px;
-    height: 40px;
+    height: 65px;
 }
 
 #blackout-vh-vertical{
-    width: 40px;
+    width: 65px;
     height: 115px;
+    left: -10px;
 }
 
 #megatron-vh{
     width: 115px;
-    height: 40px;
+    height: 60px;
 }
 
 #megatron-vh-vertical{
-    width: 40px;
+    width: 60px;
     height: 115px;
+    left: -10px;
 }
 
 #barricade-vh{
@@ -234,8 +244,6 @@
 }
 
 
-
-
 #transformers-field .grid td, #transformers-field .grid th{
     display: inline-block;
     width: 40px;
@@ -247,3 +255,22 @@
     width: 442px;
 }
 
+.targeted{
+  background-image: url(images/Target-icon-red.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#turn{
+  background-color: black;
+  color: green;
+  width: 25px;
+  padding: 1px 3px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.popover-body{
+    background-color: grey;
+}

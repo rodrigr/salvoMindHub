@@ -37,11 +37,47 @@
   background-size: cover;
 }
 
+.megan-easter{
+  background-image: url('grid-bkg.png'),  url('megan-easter-bkg.gif');
+  background-size: cover;
+}
+
+
+.aut-vs-dec-noGrid{
+	background-image: url('aut_vs_dec_bkg.jpg');
+	background-size: cover;
+}
+
+.desert-noGrid{
+  background-image:  url('desert-bkg.gif');
+  background-size: cover;
+}
+
+.cybertron-noGrid{
+  background-image:  url('cybertron-bkg.gif');
+  background-size: cover;
+}
+
+.earth-noGrid{
+  background-image:  url('earth-bkg.webp');
+  background-size: cover;
+}
+
+.tunnel-noGrid{
+  background-image:  url('tunnel-bkg.gif');
+  background-size: cover;
+}
+
+.megan-easter-noGrid{
+  background-image:  url('megan-easter-bkg.gif');
+  background-size: cover;
+}
+
 .grid-ships{
     
-    height: 495px;
-    width: 495px;
-    padding-top: 45px;
-    padding-left: 45px;
+    height: 385px;
+    width: 385px;
+    padding-top: 35px;
+    padding-left: 35px;
 
 }

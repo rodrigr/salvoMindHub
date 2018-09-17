@@ -1,5 +1,5 @@
 /*
-function createGrid (){
+function createSalvoesGrid (){
     for (var i=0; i<=10; i++){
         $(".grid-head").append("<th id='"+i+"'>"+i+"</th>");
     }
@@ -59,3 +59,38 @@ function getSide(){
         }
     }
 }*/
+
+
+
+<!--
+                <div class="card mx-auto d-block p-4 col-md-5 col-12" id="transformers-field">
+                    <div class="text-center">
+                        <h4>Your Transformers</h4>
+                    </div>
+                    <table class="grid mx-auto table-sm table-bordered dropzone">
+                        <thead>
+                        <tr class="grid-head">
+
+                        </tr>
+                        </thead>
+                        <tbody class="grid-body" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card mx-auto d-block p-4 col-md-5 col-12" id="salvoes-field">
+                    <div class="text-center">
+                        <h4>Your Salvoes</h4>
+                    </div>
+                    <table class="grid mx-auto table-sm table-bordered">
+                        <thead>
+                        <tr class="grid-head">
+
+                        </tr>
+                        </thead>
+                        <tbody class="grid-body">
+
+                        </tbody>
+                    </table>
+                </div>
+                -->

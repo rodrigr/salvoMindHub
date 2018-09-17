@@ -11,6 +11,7 @@ function getData(){
         toggleButtons();
         bkg();
         createGameButton();
+        profilePopOver();
     });
 }
 
@@ -230,3 +231,8 @@ $("#app").on("click", ".join-btn", function(){
         $("#error-msg").html("something went wrong joining the game")
     })
 })
+
+function profilePopOver(){
+  $("#user").attr("title", "Player info:").attr("data-content","Side: "+app.gameData.player.side+"<br>Points: "+app.gameData.player.points);
+  $('[data-toggle="popover"]').popover({html: true});
+}
