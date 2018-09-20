@@ -247,10 +247,10 @@ function createGrid () {
       $("#place-field").off('dblclick')
       $("#place-field").attr("id", "field");
       getTrfsLocations();
-      //getSalvoesLocations();
+
     }
   
-    
+
 
 }
 
@@ -297,7 +297,7 @@ function getTrfsLocations (){
             })
         }
     }
-    getSalvoesLocations();
+getSalvoesLocations();
 }
 
 function createSalvoesGrid (){
@@ -328,8 +328,9 @@ function getSalvoesLocations (){
                     var y = shot.slice(0,1).charCodeAt(0)-65
                     if (gridData.salvoes[i].player == gridData.gamePlayer[k].player.id){
                         $("#salvoes-field #" + gridData.salvoes[i].locations[j] + "").addClass("salvo").html(gridData.salvoes[i].turn);
-                    } else if (gridData.salvoes[i].player != gridData.gamePlayer[k].player.id && !grid.isAreaEmpty(x, y)){
+                    } else if (gridData.salvoes[i].player != gridData.gamePlayer[k].player.id ){
                         $("#grid").append('<div style="position:absolute; top:'+y*35+'px; left:'+x*35+'px" class="trf-down" ></div>');
+                        //&& !grid.isAreaEmpty(x, y)
                     }
                 }
             }

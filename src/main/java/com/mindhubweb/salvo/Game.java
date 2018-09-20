@@ -86,4 +86,6 @@ public class Game {
         dto.put("gamePlayer", this.gamePlayers.stream().map(GamePlayer::gamePlayersDTO).collect(Collectors.toList()));
         return dto;
     }
+
+
 }

@@ -1,10 +1,10 @@
 package com.mindhubweb.salvo;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Entity
 public class Salvo {
@@ -22,6 +22,8 @@ public class Salvo {
     @ElementCollection
     @Column(name="salvoLocation")
     private List<String> shots = new ArrayList<>();
+
+
 
     public Salvo () { }
 
@@ -73,5 +75,45 @@ public class Salvo {
         dto.put("player", this.getGamePlayer().getPlayer().getId());
         dto.put("locations", this.getShots());
         return dto;
+    }
+
+    public Map<String, Object> hitsDTO (){
+        Map<String, Object> dto = new LinkedHashMap<>();
+
+        dto.put("turn", this.getTurn());
+        dto.put("cells", getHits());
+
+        return dto;
+    }
+
+
+    public Map<String, Object> sinksDTO(){
+        Map<String, Object> dto = new LinkedHashMap<>();
+        dto.put("turn", this.getTurn());
+        dto.put("type", getSinks());
+        return dto;
+    }
+
+    private Optional<GamePlayer> getOpponentGamePlayer(){
+        return this.getGamePlayer().getGame().getGamePlayers().stream().filter(gp -> gp.getId() != this.gamePlayer.getId()).findFirst();
+    }
+
+    private List<String> getHits (){
+
+        return shots.stream()
+                .filter(shot -> getOpponentGamePlayer().get().getTransformers().stream().anyMatch(trf -> trf.getCells().contains(shot)))
+                .collect(Collectors.toList());
+    }
+
+    private List<String> getSinks (){
+        List<String> allShots = new ArrayList<>();
+         this.gamePlayer.getSalvoes().stream()
+                 .filter(salvo -> salvo.getTurn() <= this.getTurn())
+                 .forEach(salvo -> allShots.addAll(salvo.getShots()));
+
+         return getOpponentGamePlayer().get().getTransformers().stream()
+                .filter(trf -> allShots.containsAll(trf.getCells()))
+                .map(Transformer::getType)
+                .collect(Collectors.toList());
     }
 }
