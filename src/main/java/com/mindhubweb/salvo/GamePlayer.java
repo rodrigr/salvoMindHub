@@ -145,8 +145,18 @@ public class GamePlayer {
         return dto;
     }
 
+    public Enum<GameState> getGameState(){
+        if (this.getTransformers().isEmpty())
+            return GameState.PLACE_TRANSFORMERS;
+        else if (this.getGame().getPlayers().size() < 2)
+            return GameState.WAIT_OPPONENT_JOIN;
+        else if (getOpponentGamePlayer().get().getTransformers().isEmpty())
+            return GameState.WAIT_OPPONENT_TRANSFORMERS;
+        else if ()
+    }
 
-
-
+    private Optional<GamePlayer> getOpponentGamePlayer(){
+        return this.getGame().getGamePlayers().stream().filter(gp -> gp.getId() != this.getId()).findFirst();
+    }
 
 }
