@@ -46,12 +46,12 @@
     border-radius: 2%;
 }
 
-.grid{
-    width: 100%;
-}
+
 
 .grid td, .grid th{
   width: 30px;
+  height: 30px;
+  padding: 0px;
 }
 
 .col-header{
@@ -90,12 +90,40 @@
      background-repeat: no-repeat;
 }
 
+.trf-sunk{
+   width: 35px;
+   height: 35px;
+   background-image: url(images/fireball.gif);
+   background-size: contain;
+   background-position: center;
+   background-repeat: no-repeat;
+}
 
 .salvo{
-    background-color: orange;
-    border-radius: 25%;
-    text-align: center;
-    font-weight: bold;
+    width: 35px;
+   height: 35px;
+   background-image: url(images/red_cross.png);
+   background-size: contain;
+   background-position: center;
+   background-repeat: no-repeat;
+}
+
+.hit{
+    width: 35px;
+     height: 35px;
+     background-image: url(images/target-down.gif);
+     background-size: contain;
+     background-position: center;
+     background-repeat: no-repeat;
+}
+
+.sunk{
+    width: 35px;
+   height: 35px;
+   background-image: url(images/fireball.gif);
+   background-size: contain;
+   background-position: center;
+   background-repeat: no-repeat;
 }
 
 .hidden{
@@ -191,56 +219,60 @@
     height: 55px;
 }
 
-#brawl-vh{
-  width: 210px;
-  height: 40px;
-}
 
-#brawl-vh-vertical{
-  width: 40px;
-  height: 210px;
-}
-
-#blackout-vh{
-    width: 115px;
-    height: 65px;
-}
-
-#blackout-vh-vertical{
-    width: 65px;
-    height: 115px;
-    left: -10px;
-}
 
 #megatron-vh{
-    width: 115px;
-    height: 60px;
+    width: 150px;
+    height: 35px;
 }
 
 #megatron-vh-vertical{
-    width: 60px;
-    height: 115px;
-    left: -10px;
+    width: 35px;
+    height: 150px;
+    
 }
 
+#brawl-vh{
+  width: 125px;
+  height: 30px;
+}
+
+#brawl-vh-vertical{
+  width: 30px;
+  height: 125px;
+}
+
+#blackout-vh{
+    width: 90px;
+    height: 45px;
+}
+
+#blackout-vh-vertical{
+    width: 45px;
+    height: 90px;
+    left: -5px;
+}
+
+
+
 #barricade-vh{
-    width: 150px;
-    height: 40px;
+    width: 90px;
+    height: 30px;
 }
 
 #barricade-vh-vertical{
-    width: 40px;
-    height: 150px;
+    width: 30px;
+    height: 90px;
 }
 
 #starscream-vh{
-    width: 85px;
-    height: 40px;
+    width: 55px;
+    height: 30px;
 }
 
 #starscream-vh-vertical{
-    width: 40px;
-    height: 85px;
+    width: 30px;
+    height: 55px;
 }
 
 
@@ -273,4 +305,28 @@
 
 .popover-body{
     background-color: grey;
+}
+
+.popover-header{
+  background-color: purple;
+}
+
+.bs-popover-auto[x-placement^=right] .arrow::after, .bs-popover-right .arrow::after {
+    
+    border-right-color: black;
+}
+
+.enemy-icon{
+    width: 75px;
+    height: 75px;
+    display: block;
+}
+
+.enemy-down{
+    opacity: 0.3;
+
+}
+
+.grid-stack-item{
+  background-color: rgba(255, 255, 255, 0.2)
 }

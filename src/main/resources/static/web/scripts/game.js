@@ -48,10 +48,11 @@ function getCurrentPlayerData(){
         currentPlayerData = data.player;
         bkg();
         newGame();
+        dinamicData();
         createSalvoesGrid();
         createGrid();
         getTurn();
-        dinamicData();
+
    })
 }
 
@@ -263,9 +264,9 @@ function createTrfs(){
     grid.addWidget($('<div id="3-cells-trf-2"><img src="styles/images/ratchet_vh_vertical.png" alt="ratchet" id="ratchet-vh-vertical" class="grid-stack-item-content d-block m-auto"></div>'), 3, 5, 1, 3, false);
     grid.addWidget($('<div id="2-cells-trf"><img src="styles/images/sideswipe_vh_vertical.png" alt="sideswipe" id="sideswipe-vh-vertical" class="grid-stack-item-content d-block m-auto"></div>'), 10, 8, 1, 2, false);
   } else if (side === "DECEPTICONS"){
-    grid.addWidget($('<div id="5-cells-trf"><img src="styles/images/brawl_vh.png" alt="brawl" id="brawl-vh" class="grid-stack-item-content d-block m-auto"></div>'), 0, 2, 5, 1, false);
-    grid.addWidget($('<div id="4-cells-trf"><img src="styles/images/barricade_vh.png" alt="barricade" id="barricade-vh" class="grid-stack-item-content d-block m-auto"></div>'), 4, 1, 4, 1, false);
-    grid.addWidget($('<div id="3-cells-trf"><img src="styles/images/megatron_vh.png" alt="megatron" id="megatron-vh" class="grid-stack-item-content d-block m-auto"></div>'), 5, 8, 3, 1, false);
+    grid.addWidget($('<div data-toggle="popover" data-placement="left" id="5-cells-trf"><img src="styles/images/megatron_vh.png" alt="megatron" id="megatron-vh" class="grid-stack-item-content d-block m-auto"></div>'), 0, 2, 5, 1, false);
+    grid.addWidget($('<div id="4-cells-trf"><img src="styles/images/brawl_vh.png" alt="brawl" id="brawl-vh" class="grid-stack-item-content d-block m-auto"></div>'), 4, 1, 4, 1, false);
+    grid.addWidget($('<div id="3-cells-trf"><img src="styles/images/barricade_vh.png" alt="barricade" id="barricade-vh" class="grid-stack-item-content d-block m-auto"></div>'), 5, 8, 3, 1, false);
     grid.addWidget($('<div id="3-cells-trf-2"><img src="styles/images/blackout_vh_vertical.png" alt="blackout" id="blackout-vh-vertical" class="grid-stack-item-content d-block m-auto"></div>'), 3, 5, 1, 3, false);
     grid.addWidget($('<div id="2-cells-trf"><img src="styles/images/starscream_vh_vertical.png" alt="starscream" id="starscream-vh-vertical" class="grid-stack-item-content d-block m-auto"></div>'), 10, 8, 1, 2, false);
   }
@@ -318,25 +319,50 @@ function createSalvoesGrid (){
 
 }
 
-function getSalvoesLocations (){
-    for (var i in gridData.salvoes){
-        for (var j in gridData.salvoes[i].locations){
-            for (var k in gridData.gamePlayer){
-                if (gridData.gamePlayer[k].id == getGpId(url)){
-                    var shot =  gridData.salvoes[i].locations[j];
-                    var x = parseInt(shot.slice(1))-1;
-                    var y = shot.slice(0,1).charCodeAt(0)-65
-                    if (gridData.salvoes[i].player == gridData.gamePlayer[k].player.id){
-                        $("#salvoes-field #" + gridData.salvoes[i].locations[j] + "").addClass("salvo").html(gridData.salvoes[i].turn);
-                    } else if (gridData.salvoes[i].player != gridData.gamePlayer[k].player.id ){
-                        $("#grid").append('<div style="position:absolute; top:'+y*35+'px; left:'+x*35+'px" class="trf-down" ></div>');
-                        //&& !grid.isAreaEmpty(x, y)
-                    }
+function getSalvoesLocations(){
+    
+    var id = currentPlayerData.id;
+    gridData.salvoes.map(function(salvo){
+      
+      
+        for(var i in salvo.locations){
+              var shot =  salvo.locations[i];
+              var x = parseInt(shot.slice(1))-1;
+              var y = shot.slice(0,1).charCodeAt(0)-65;
+              
+              if(salvo.player == id){
+                
+                if(salvo.hits.indexOf(shot) > -1){
+                    $("#salvoes-field #"+shot).addClass("hit");
+                } else {
+                    $("#salvoes-field #"+shot).addClass("salvo");
                 }
-            }
+                salvo.sinks.map(function(item){
+                    $("#"+item.type+"-icon").addClass("enemy-down");
+                    for(var cell in item.location){
+                        $("#salvoes-field #"+item.location[cell]).addClass("sunk").removeClass("hit");
+                    }
+                })
+              } else{
+                
+                gridData.transformers.map(function(trf){
+                    if(trf.location.indexOf(shot) > -1 ){
+                      
+                       $("#grid").append('<div id="'+shot+'-down" style="position:absolute; top:'+y*35+'px; left:'+x*35+'px" class="trf-down" ></div>');
+                    }
+                
+                })
+                
+              }
+
         }
-    }
+    })
 }
+
+
+
+
+
 
 $("#salvoes-field").on('click', '.cell', function(){
   if(!$(this).hasClass("salvo") && !$(this).hasClass("targeted")){
@@ -435,9 +461,20 @@ function dinamicData(){
   $("#turn").html(getTurn());
   if(currentPlayerData.side == "AUTOBOTS"){
     $("#team-title").html('<img class="trf-icon" src="styles/images/AutobotsIcon.png">'+currentPlayerData.side+' TEAM');
+    $("#enemies").html("<img data-toggle='popover' data-placement='right' class='enemy-icon decepticon' src='styles/images/Megatron_icon.png' id='megatron-icon'><img data-toggle='popover' data-placement='right' class='enemy-icon decepticon' src='styles/images/Brawl_icon.png' id='brawl-icon'><img data-toggle='popover' data-placement='right' class='enemy-icon decepticon' src='styles/images/Barricade_icon.png' id='barricade-icon'><img data-toggle='popover' data-placement='right' class='enemy-icon decepticon' src='styles/images/Blackout_icon.png' id='blackout-icon'><img data-toggle='popover' data-placement='right' class='enemy-icon decepticon' src='styles/images/Starscream_icon.png' id='starscream-icon'>")
   } else if(currentPlayerData.side == "DECEPTICONS"){
-    $("#team-title").html('<img class="trf-icon" src="styles/images/Decepticon.png">'+currentPlayerData.side+' TEAM');
+    $("#team-title").html('<img  class="trf-icon" src="styles/images/Decepticon.png">'+currentPlayerData.side+' TEAM');
+    $("#enemies").html("<img data-toggle='popover' data-placement='right' class='enemy-icon autobot' src='styles/images/Optimus_Prime_icon.png' id='optimus-icon'><img data-toggle='popover' data-placement='right' class='enemy-icon autobot' src='styles/images/Bumblebee_icon.png' id='bumblebee-icon'><img data-toggle='popover' data-placement='right' class='enemy-icon autobot' src='styles/images/Ironhide_icon.png' id='ironhide-icon'><img  data-toggle='popover' data-placement='right' class='enemy-icon autobot' src='styles/images/Ratchet_icon.png' id='ratchet-icon'><img data-toggle='popover' data-placement='right' class='enemy-icon autobot' src='styles/images/Sideswipe_icon.png' id='sideswipe-icon'>")
   }
-  
+  popOver();
+}
+
+function popOver(){
+  $('#megatron-icon').popover({title:"Megatron", content: "5 cells<br>Leader of the Decepticons", html: true});
+  $('#brawl-icon').popover({title:"Brawl", content: "4 cells", html: true});
+  $('#barricade-icon').popover({title:"Barricade", content: "3 cells", html: true});
+  $('#blackout-icon').popover({title:"Blackout", content: "3 cells", html: true});
+  $('#starscream-icon').popover({title:"Starscream", content: "2 cells", html: true});
+  $('#optimus-icon').popover({title: "Optimus Prime", content: "5 cells<br>Leader of the Autobots", html: true})
 }
 

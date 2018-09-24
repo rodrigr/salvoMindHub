@@ -74,25 +74,13 @@ public class Salvo {
         dto.put("turn", this.getTurn());
         dto.put("player", this.getGamePlayer().getPlayer().getId());
         dto.put("locations", this.getShots());
-        return dto;
-    }
-
-    public Map<String, Object> hitsDTO (){
-        Map<String, Object> dto = new LinkedHashMap<>();
-
-        dto.put("turn", this.getTurn());
-        dto.put("cells", getHits());
-
+        dto.put("hits", this.getHits());
+        dto.put("sinks", this.getSinks());
         return dto;
     }
 
 
-    public Map<String, Object> sinksDTO(){
-        Map<String, Object> dto = new LinkedHashMap<>();
-        dto.put("turn", this.getTurn());
-        dto.put("type", getSinks());
-        return dto;
-    }
+
 
     private Optional<GamePlayer> getOpponentGamePlayer(){
         return this.getGamePlayer().getGame().getGamePlayers().stream().filter(gp -> gp.getId() != this.gamePlayer.getId()).findFirst();
@@ -105,7 +93,7 @@ public class Salvo {
                 .collect(Collectors.toList());
     }
 
-    private List<String> getSinks (){
+    private List<Map<String, Object>> getSinks (){
         List<String> allShots = new ArrayList<>();
          this.gamePlayer.getSalvoes().stream()
                  .filter(salvo -> salvo.getTurn() <= this.getTurn())
@@ -113,7 +101,7 @@ public class Salvo {
 
          return getOpponentGamePlayer().get().getTransformers().stream()
                 .filter(trf -> allShots.containsAll(trf.getCells()))
-                .map(Transformer::getType)
+                .map(Transformer::transformersDTO)
                 .collect(Collectors.toList());
     }
 }

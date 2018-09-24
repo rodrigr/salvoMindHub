@@ -131,8 +131,6 @@ public class GamePlayer {
         dto.put("transformers", this.transformers.stream().map(Transformer::transformersDTO).collect(Collectors.toList()));
         dto.put("salvoes", this.game.getGamePlayers().stream().flatMap(gamePlayer -> gamePlayer.getSalvoes().stream().map(Salvo::salvoesDTO)));
 
-        dto.put("hits", this.getSalvoes().stream().map(Salvo::hitsDTO));
-        dto.put("sinks", this.getSalvoes().stream().map(Salvo::sinksDTO));
         return dto;
     }
 

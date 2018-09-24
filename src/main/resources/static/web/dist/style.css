@@ -23,7 +23,7 @@
 }
 
 .cybertron{
-  background-image: url('grid-bkg.png'), url('cybertron-bkg.gif');
+  background-image: url('grid-bkg.png'), url('cybertron-bkg.jpg');
   background-size: cover;
 }
 
@@ -54,7 +54,7 @@
 }
 
 .cybertron-noGrid{
-  background-image:  url('cybertron-bkg.gif');
+  background-image:  url('cybertron-bkg.jpg');
   background-size: cover;
 }
 
