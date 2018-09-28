@@ -8,5 +8,6 @@ public enum GameState {
     WAIT_OPPONENT_SALVOES,
     WIN,
     LOSE,
-    DRAW
+    DRAW,
+    UNDEFINED
 }

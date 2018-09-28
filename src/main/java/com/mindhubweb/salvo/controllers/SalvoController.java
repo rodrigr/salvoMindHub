@@ -20,12 +20,14 @@ public class SalvoController {
     private GameRepository gameRepository;
     private GamePlayerRepository gamePlayerRepository;
     private PlayerRepository playerRepository;
+    private ScoreRepository scoreRepository;
 
     @Autowired
-    SalvoController (GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, PlayerRepository playerRepository){
+    SalvoController (GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, PlayerRepository playerRepository, ScoreRepository scoreRepository){
         this.gameRepository = gameRepository;
         this.gamePlayerRepository = gamePlayerRepository;
         this.playerRepository = playerRepository;
+        this.scoreRepository = scoreRepository;
     }
 
     @GetMapping("/games")
@@ -115,6 +117,10 @@ public class SalvoController {
         if(!gamePlayer.get().getPlayer().getUserName().equals(authentication.getName())){
             return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
         }
+        Optional<GamePlayer> opponentGamePlayer = gamePlayer.get().getGame().getGamePlayers().stream().filter(gp -> gp.getId() != gamePlayerId).findFirst();
+        if(!opponentGamePlayer.isPresent()){
+            return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+        }
         if(gamePlayer.get().getTransformers().size() > 0 || transformerSet.size() != 5){
             return new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_PLACED_TRFS), HttpStatus.FORBIDDEN);
         }
@@ -146,10 +152,27 @@ public class SalvoController {
             return  new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
         }
 
+        if(opponentGamePlayer.get().getTransformers().isEmpty()){
+            return  new ResponseEntity<>(makeMap(Messages.KEY_ERROR, Messages.MSG_ERROR_FORBIDDEN), HttpStatus.FORBIDDEN);
+        }
+
+
         Set<Salvo> salvoSet = new HashSet<>();
         salvoSet.add(salvo);
         gamePlayer.get().addSalvoes(salvoSet);
-        gamePlayerRepository.save(gamePlayer.get());
+        GamePlayer gamePlayerSaved = gamePlayerRepository.save(gamePlayer.get());
+        if (gamePlayerSaved != null){
+            if (gamePlayer.get().getGameState() == GameState.WIN){
+                scoreRepository.save(new Score(gamePlayer.get().getPlayer(), gamePlayer.get().getGame(), 1.0F, LocalDateTime.now()));
+                scoreRepository.save(new Score(opponentGamePlayer.get().getPlayer(), opponentGamePlayer.get().getGame(), 0.0F, LocalDateTime.now()));
+            } else if (gamePlayer.get().getGameState() == GameState.LOSE){
+                scoreRepository.save(new Score(gamePlayer.get().getPlayer(), gamePlayer.get().getGame(), 0.0F, LocalDateTime.now()));
+                scoreRepository.save(new Score(opponentGamePlayer.get().getPlayer(), opponentGamePlayer.get().getGame(), 1.0F, LocalDateTime.now()));
+            } else if (gamePlayer.get().getGameState() == GameState.DRAW){
+                scoreRepository.save(new Score(gamePlayer.get().getPlayer(), gamePlayer.get().getGame(), 0.5F, LocalDateTime.now()));
+                scoreRepository.save(new Score(opponentGamePlayer.get().getPlayer(), opponentGamePlayer.get().getGame(), 0.5F, LocalDateTime.now()));
+            }
+        }
         return  new ResponseEntity<>(makeMap(Messages.KEY_CREATED, Messages.MSG_CREATED), HttpStatus.CREATED);
     }
 

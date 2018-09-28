@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
+
 @Entity
 public class GamePlayer {
 
@@ -138,6 +140,8 @@ public class GamePlayer {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("id", this.getId());
         dto.put("player", this.player.playersDTO());
+        dto.put("game_state", getGameState());
+        dto.put("shots_left", shotsToMake());
         if (this.getScore() != null)
             dto.put("score", this.getScore().getPoints());
         else
@@ -146,17 +150,58 @@ public class GamePlayer {
     }
 
     public Enum<GameState> getGameState(){
-        if (this.getTransformers().isEmpty())
-            return GameState.PLACE_TRANSFORMERS;
-        else if (this.getGame().getPlayers().size() < 2)
-            return GameState.WAIT_OPPONENT_JOIN;
-        else if (getOpponentGamePlayer().get().getTransformers().isEmpty())
-            return GameState.WAIT_OPPONENT_TRANSFORMERS;
-        else if ()
+        Enum<GameState> gameStateEnum = GameState.UNDEFINED;
+        Optional<GamePlayer> opponentGamePlayer = this.getGame().getGamePlayers().stream().filter(gp -> gp.getId() != this.getId()).findFirst();
+        if (!opponentGamePlayer.isPresent()) {
+            gameStateEnum = GameState.WAIT_OPPONENT_JOIN;
+        } else{
+            if (this.getTransformers().isEmpty())
+                gameStateEnum = GameState.PLACE_TRANSFORMERS;
+            else if (opponentGamePlayer.get().getTransformers().isEmpty())
+                gameStateEnum = GameState.WAIT_OPPONENT_TRANSFORMERS;
+            else{
+                int myTurn = this.getSalvoes().stream().mapToInt(Salvo::getTurn).max().orElse(0);
+                int opponentTurn = opponentGamePlayer.get().getSalvoes().stream().mapToInt(Salvo::getTurn).max().orElse(0);
+                if (this.getId() < opponentGamePlayer.get().getId() && myTurn == opponentTurn)
+                    gameStateEnum = GameState.ENTER_SALVOES;
+                else if (this.getId() < opponentGamePlayer.get().getId() && myTurn > opponentTurn)
+                    gameStateEnum =  GameState.WAIT_OPPONENT_SALVOES;
+                else if (this.getId() > opponentGamePlayer.get().getId() && myTurn < opponentTurn)
+                    gameStateEnum = GameState.ENTER_SALVOES;
+                else if (this.getId() > opponentGamePlayer.get().getId() && myTurn == opponentTurn)
+                    gameStateEnum =  GameState.WAIT_OPPONENT_SALVOES;
+                List<Map<String, Object>> mySinks = this.getSinks(myTurn, opponentGamePlayer.get().getTransformers(), this.getSalvoes());
+                List<Map<String, Object>> opponentSinks = this.getSinks(opponentTurn, this.getTransformers(), opponentGamePlayer.get().getSalvoes());
+                if (myTurn == opponentTurn && mySinks.size() == 5 && mySinks.size() > opponentSinks.size())
+                    gameStateEnum = GameState.WIN;
+                else if (myTurn == opponentTurn && opponentSinks.size() == 5 && opponentSinks.size() > mySinks.size())
+                    gameStateEnum = GameState.LOSE;
+                else if (myTurn == opponentTurn && mySinks.size() == 5 && opponentSinks.size() == 5)
+                    gameStateEnum = GameState.DRAW;
+            }
+        }
+
+        return gameStateEnum;
     }
 
-    private Optional<GamePlayer> getOpponentGamePlayer(){
-        return this.getGame().getGamePlayers().stream().filter(gp -> gp.getId() != this.getId()).findFirst();
+    private List<Map<String, Object>> getSinks (int turn, Set<Transformer> transformers, Set<Salvo> salvoes){
+        List<String> allShots = new ArrayList<>();
+        salvoes.stream()
+                .filter(salvo -> salvo.getTurn() <= turn)
+                .forEach(salvo -> allShots.addAll(salvo.getShots()));
+
+        return transformers.stream()
+                .filter(trf -> allShots.containsAll(trf.getCells()))
+                .map(Transformer::transformersDTO)
+                .collect(Collectors.toList());
+    }
+
+    public int shotsToMake() {
+        Optional <GamePlayer> opponentGamePlayer = this.getGame().getGamePlayers().stream().filter(gamePlayer1 -> gamePlayer1.getId() != this.getId()).findFirst();
+        return opponentGamePlayer.map(gamePlayer -> 5 - this.getSinks(currentTurn()-1,this.getTransformers(), gamePlayer.getSalvoes() ).size()).orElse(5);
+    }
+    public int currentTurn() {
+        return this.getSalvoes().stream().mapToInt(Salvo::getTurn).max().orElse(0)+1;
     }
 
 }
