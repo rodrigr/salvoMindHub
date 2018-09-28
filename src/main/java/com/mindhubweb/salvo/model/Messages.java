@@ -1,4 +1,4 @@
-package com.mindhubweb.salvo;
+package com.mindhubweb.salvo.model;
 
 public final class Messages {
     public static final String KEY_ERROR= "error";
@@ -10,4 +10,6 @@ public final class Messages {
     public static final String MSG_ERROR_PLACED_TRFS = "transformers have been already placed";
     public static final String KEY_CREATED = "created";
     public static final String MSG_CREATED = "successfully";
+
+    private Messages(){}
 }

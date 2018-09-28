@@ -38,7 +38,7 @@
 }
 
 .vs{
-    width: 3%;
+    width: 10%;
 }
 
 .card-bkg, .card{
@@ -84,7 +84,7 @@
 .trf-down{
      width: 35px;
      height: 35px;
-     background-image: url(images/target-down.gif);
+     background-image: url(images/dark-bomb.gif);
      background-size: contain;
      background-position: center;
      background-repeat: no-repeat;
@@ -111,7 +111,7 @@
 .hit{
     width: 35px;
      height: 35px;
-     background-image: url(images/target-down.gif);
+     background-image: url(images/dark-bomb.gif);
      background-size: contain;
      background-position: center;
      background-repeat: no-repeat;
@@ -120,10 +120,11 @@
 .sunk{
     width: 35px;
    height: 35px;
-   background-image: url(images/fireball.gif);
+   background-image: url(images/dark-bomb.gif);
    background-size: contain;
    background-position: center;
    background-repeat: no-repeat;
+   background-color: #CD0000;
 }
 
 .hidden{
@@ -223,11 +224,11 @@
 
 #megatron-vh{
     width: 150px;
-    height: 35px;
+    height: 40px;
 }
 
 #megatron-vh-vertical{
-    width: 35px;
+    width: 40px;
     height: 150px;
     
 }
@@ -303,12 +304,25 @@
   font-weight: bold;
 }
 
+#battle-log{
+  background-color: black;
+  color: green;
+  width: 175px;
+  height: 75px;
+  padding: 1px 3px;
+
+}
+
+.popover{
+    background-color: blue;
+}
+
 .popover-body{
     background-color: grey;
 }
 
 .popover-header{
-  background-color: purple;
+  background-color: blue;
 }
 
 .bs-popover-auto[x-placement^=right] .arrow::after, .bs-popover-right .arrow::after {
@@ -330,3 +344,79 @@
 .grid-stack-item{
   background-color: rgba(255, 255, 255, 0.2)
 }
+
+.missile{
+    height: 50px;
+    margin-top: 10px;
+}
+
+#missile-field{
+    display: inline-block;
+}
+
+#games-list-container{
+    height: 400px;
+    overflow: auto;
+}
+
+.autobots-defeated{
+    background-image: url("images/autobots-defeated.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding-bottom: 400px;
+}
+
+.decepticons-defeated{
+    background-image: url("images/decepticons-defeated.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding-bottom: 400px;
+}
+
+.autobots-victory{
+    background-image: url("images/autobots-victory.jpeg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding-bottom: 400px;
+}
+
+.decepticons-victory{
+    background-image: url("images/decepticons-victory.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding-bottom: 400px;
+}
+
+.modal-full {
+    min-width: 100%;
+    margin: 0;
+}
+
+.modal-full .modal-content {
+    min-height: 100vh;
+}
+
+.modal-full .modal-body{
+    padding: 0;
+    background-color: black;
+}
+
+.intro{
+    width: 99vw;
+    height: 99vh;
+    position: absolute;
+    z-index: 1;
+}
+
+.skip{
+    position: absolute;
+    top: 75px;
+    right: 50px;
+    z-index: 2;
+}
+
+

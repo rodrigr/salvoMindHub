@@ -109,6 +109,10 @@ $("#logout-btn").click(function(){
         })
     })
 
+var vid = document.getElementById("autobots-intro");
+
+
+
 $("#signup-btn").click(function(){
     if(!$("#username-field").val() || !$(".side-field:checked").val() || !$("#password-field").val()){
         $("#alert").html("Empty fields")
@@ -120,6 +124,10 @@ $("#signup-btn").click(function(){
                 login();
                 $("#alert").html("");
                 $("#login-form").modal("hide");
+
+                $("#intro-modal").modal()
+
+                vid.play();
             })
             .fail(function(){
                 $("#alert").html("Sign up failed");
@@ -127,6 +135,10 @@ $("#signup-btn").click(function(){
     }
 
 })
+
+vid.onended = function() {
+    $("#intro-modal").modal("hide");
+};
 
 function toggleButtons(){
     if(app.gameData.player == "guest"){

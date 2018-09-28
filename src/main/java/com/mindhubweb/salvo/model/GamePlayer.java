@@ -1,4 +1,4 @@
-package com.mindhubweb.salvo;
+package com.mindhubweb.salvo.model;
 
 
 

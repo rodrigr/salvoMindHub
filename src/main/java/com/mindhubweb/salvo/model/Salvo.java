@@ -1,10 +1,8 @@
-package com.mindhubweb.salvo;
+package com.mindhubweb.salvo.model;
 
 import javax.persistence.*;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 @Entity
 public class Salvo {
@@ -98,10 +96,14 @@ public class Salvo {
          this.gamePlayer.getSalvoes().stream()
                  .filter(salvo -> salvo.getTurn() <= this.getTurn())
                  .forEach(salvo -> allShots.addAll(salvo.getShots()));
+         List<Map<String, Object>> allSinks = new ArrayList<>();
 
-         return getOpponentGamePlayer().get().getTransformers().stream()
-                .filter(trf -> allShots.containsAll(trf.getCells()))
-                .map(Transformer::transformersDTO)
-                .collect(Collectors.toList());
+         if(getOpponentGamePlayer().isPresent()){
+             allSinks = getOpponentGamePlayer().get().getTransformers().stream()
+                     .filter(trf -> allShots.containsAll(trf.getCells()))
+                     .map(Transformer::transformersDTO)
+                     .collect(Collectors.toList());
+         }
+         return allSinks;
     }
 }

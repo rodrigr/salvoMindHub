@@ -37,6 +37,12 @@
   background-size: cover;
 }
 
+.moon{
+  background-image: url('grid-bkg.png'), url('moon-bkg.png');
+  background-size: cover;
+  background-position: center;
+}
+
 .megan-easter{
   background-image: url('grid-bkg.png'),  url('megan-easter-bkg.gif');
   background-size: cover;
@@ -66,6 +72,12 @@
 .tunnel-noGrid{
   background-image:  url('tunnel-bkg.gif');
   background-size: cover;
+}
+
+.moon-noGrid{
+  background-image: url('moon-bkg.png');
+  background-size: cover;
+  background-position: center;
 }
 
 .megan-easter-noGrid{

@@ -25,19 +25,15 @@
     </header>
     <section>
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12 text-center text-light">
-                    <h3>
-                        <span id="p1"></span>
-                        <span><img src="styles/images/vs.png" alt="vs" class="vs"></span>
-                        <span id="p2"></span>
-                    </h3>
-                </div>
-                
-            </div>
-            <div class="row card-bkg w-75 py-4 mb-4 mx-auto">
+
+            <div class="row card-bkg w-75 py-2 mb-4 mx-auto" id="play-field">
                 
                     <div class="col-6" id="field">
+                        <h4 class="text-center font-weight-bold">
+                            <span id="p1"></span>
+                            <span><img src="styles/images/vs.png" alt="vs" class="vs"></span>
+                            <span id="p2"></span>
+                        </h4>
                        <h2 id="team-title" class="font-weight-bold pl-4"></h2>
                        <div id="new-game-form" class="hidden">
                         <button id="place-btn" class="btn btn-danger d-block mx-auto my-2">Place Transformers</button>
@@ -55,16 +51,20 @@
                             <option value="earth">Earth</option>
                             <option value="none">None</option>
                             <option value="aut-vs-dec">Autobots vs Decepticons</option>
+                              <option value="moon">Moon</option>
                             <option value="cybertron">Cybertron</option>
                             <option value="desert">Desert</option>
                             <option value="tunnel">Tunnel</option>
                           </select>
                         </div>
                       <div id="salvoes-field" class="row">
-                        <div class="my-2 col-12">
+                        <div class="my-2 col-4">
                             <h3 class="font-weight-bold">Your Shots</h3>
                             <span>Turn: </span><span id="turn"></span>
                             <span class="bg-danger text-light" id="error-msg-salvo"></span>
+                        </div>
+                        <div class="my-2 col-8">
+                           <div id="battle-log"></div>
                         </div>
                         <div class="col-10">
                             <table id="salvoes-table" class="grid earth-noGrid table-sm table-borderless border border-secondary text-light">
@@ -77,16 +77,31 @@
 
                                 </tbody>
                             </table>
-                            <button id="shoot-btn" class="btn btn-warning mx-auto d-block mt-2">Shoot!</button>
+                            <button id="shoot-btn" class="btn btn-warning mt-2">Shoot!</button>
+                            <div id="missile-field" >
+
+                            </div>
+
                         </div>
                         <div id="enemies" class="col-2"></div>
                     </div>
                     </div>
                     
                 </div>
+                <div id="win" class="hidden text-secondary text-center">
+                    <h1>YOU'VE WON</h1>
+                </div>
+                <div id="lose" class="hidden text-secondary text-center">
+                    <h1>YOU'VE BEEN DEFEATED</h1>
+                </div>
+                <div id="draw" class="hidden text-secondary text-center">
+                    <h1>YOU'VE TIED</h1>
+                </div>
             
         </div>
     </section>
+    <audio src="styles/audio/arrival-to-earth.mp3" autoplay loop></audio>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>

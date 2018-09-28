@@ -7,6 +7,7 @@ function getGrid(gpId){
         gridData = data;
         getPlayers(gpId)
         getCurrentPlayerData();
+
     })
 }
 
@@ -52,6 +53,7 @@ function getCurrentPlayerData(){
         createSalvoesGrid();
         createGrid();
         getTurn();
+        checkGameState()
 
    })
 }
@@ -114,6 +116,7 @@ function changeBkg(){
       .removeClass("cybertron")
       .removeClass("earth")
       .removeClass("tunnel")
+      .removeClass("moon")
       .addClass($(this).val());
     $("#salvoes-table")
       .removeClass("none-noGrid")
@@ -122,6 +125,7 @@ function changeBkg(){
       .removeClass("cybertron-noGrid")
       .removeClass("earth-noGrid")
       .removeClass("tunnel-noGrid")
+      .removeClass("moon-noGrid")
       .addClass($(this).val()+"-noGrid");
   })
 }
@@ -208,6 +212,14 @@ function createGrid () {
     
     if(gridData.transformers.length === 0){
       options.staticGrid = false;
+      $('.grid-stack').gridstack(options);
+      grid = $('#grid').data('gridstack');
+
+      if(typeof grid != 'undefined'){
+              grid.removeAll();
+              grid.destroy(false);
+      }
+
       $('.grid-stack').gridstack(options);
       grid = $('#grid').data('gridstack');
       createTrfs();
@@ -393,8 +405,13 @@ function addSalvoes(){
 
 $("#shoot-btn").click(function(){
   $("#error-msg-salvo").html("");
+  var shotsLeft = gridData.gamePlayer.map(function(gp){
+    if(gp.player.id == currentPlayerData.id){
+        return gp.shots_left;
+    }
+  }).join('');
   var arr = [];
-  if($(".targeted").length == 5){
+  if($(".targeted").length == shotsLeft){
       $(".cell").each(function(){
       if($(this).hasClass("targeted") ){
         arr.push($(this).attr("id"));
@@ -406,7 +423,7 @@ $("#shoot-btn").click(function(){
 
     addSalvoes();
     
-  } else if ($(".targeted").length == 100){
+  } /*else if ($(".targeted").length == 100){
     $("#grid-container")
       .removeClass("none")
       .removeClass("aut-vs-dec")
@@ -432,8 +449,8 @@ $("#shoot-btn").click(function(){
     $(".cell").each(function(){
       $(this).removeClass("targeted")
     });
-  }else{
-    $("#error-msg-salvo").html("you need to shoot 5 times")
+  }*/else{
+    $("#error-msg-salvo").html("you need to shoot "+ shotsLeft +" times")
   }
   
 })
@@ -460,9 +477,13 @@ function getTurn (){
 function dinamicData(){
   $("#turn").html(getTurn());
   if(currentPlayerData.side == "AUTOBOTS"){
+    $("#p1").css({"color":"#8C1717"})
+    $("#p2").css({"color":"#380474"})
     $("#team-title").html('<img class="trf-icon" src="styles/images/AutobotsIcon.png">'+currentPlayerData.side+' TEAM');
     $("#enemies").html("<img data-toggle='popover' data-placement='right' class='enemy-icon decepticon' src='styles/images/Megatron_icon.png' id='megatron-icon'><img data-toggle='popover' data-placement='right' class='enemy-icon decepticon' src='styles/images/Brawl_icon.png' id='brawl-icon'><img data-toggle='popover' data-placement='right' class='enemy-icon decepticon' src='styles/images/Barricade_icon.png' id='barricade-icon'><img data-toggle='popover' data-placement='right' class='enemy-icon decepticon' src='styles/images/Blackout_icon.png' id='blackout-icon'><img data-toggle='popover' data-placement='right' class='enemy-icon decepticon' src='styles/images/Starscream_icon.png' id='starscream-icon'>")
   } else if(currentPlayerData.side == "DECEPTICONS"){
+    $("#p1").css({"color":"#380474"})
+    $("#p2").css({"color":"#8C1717"})
     $("#team-title").html('<img  class="trf-icon" src="styles/images/Decepticon.png">'+currentPlayerData.side+' TEAM');
     $("#enemies").html("<img data-toggle='popover' data-placement='right' class='enemy-icon autobot' src='styles/images/Optimus_Prime_icon.png' id='optimus-icon'><img data-toggle='popover' data-placement='right' class='enemy-icon autobot' src='styles/images/Bumblebee_icon.png' id='bumblebee-icon'><img data-toggle='popover' data-placement='right' class='enemy-icon autobot' src='styles/images/Ironhide_icon.png' id='ironhide-icon'><img  data-toggle='popover' data-placement='right' class='enemy-icon autobot' src='styles/images/Ratchet_icon.png' id='ratchet-icon'><img data-toggle='popover' data-placement='right' class='enemy-icon autobot' src='styles/images/Sideswipe_icon.png' id='sideswipe-icon'>")
   }
@@ -470,11 +491,83 @@ function dinamicData(){
 }
 
 function popOver(){
-  $('#megatron-icon').popover({title:"Megatron", content: "5 cells<br>Leader of the Decepticons", html: true});
-  $('#brawl-icon').popover({title:"Brawl", content: "4 cells", html: true});
-  $('#barricade-icon').popover({title:"Barricade", content: "3 cells", html: true});
-  $('#blackout-icon').popover({title:"Blackout", content: "3 cells", html: true});
-  $('#starscream-icon').popover({title:"Starscream", content: "2 cells", html: true});
-  $('#optimus-icon').popover({title: "Optimus Prime", content: "5 cells<br>Leader of the Autobots", html: true})
+  $('#megatron-icon').popover({title:"Megatron", content: "5 cells<br>Leader of the Decepticons", html: true, trigger: "hover"});
+  $('#brawl-icon').popover({title:"Brawl", content: "4 cells", html: true, trigger: "hover"});
+  $('#barricade-icon').popover({title:"Barricade", content: "3 cells", html: true, trigger: "hover"});
+  $('#blackout-icon').popover({title:"Blackout", content: "3 cells", html: true, trigger: "hover"});
+  $('#starscream-icon').popover({title:"Starscream", content: "2 cells", html: true, trigger: "hover"});
+  $('#optimus-icon').popover({title: "Optimus Prime", content: "5 cells<br>Leader of the Autobots", html: true, trigger: "hover"})
+  $('#bumblebee-icon').popover({title:"Bumblebee", content: "4 cells", html: true, trigger: "hover"});
+  $('#ironhide-icon').popover({title:"Ironhide", content: "3 cells", html: true, trigger: "hover"});
+  $('#ratchet-icon').popover({title:"Ratchet", content: "3 cells", html: true, trigger: "hover"});
+  $('#sideswipe-icon').popover({title:"Sideswipe", content: "2 cells", html: true, trigger: "hover"});
 }
+
+function checkGameState(){
+    gridData.gamePlayer.map(function(gp){
+        if(gp.player.id == currentPlayerData.id){
+            if(gp.game_state == "WAIT_OPPONENT_JOIN"){
+               $("#place-btn").html("Waiting an opponent")
+               $("#place-btn").prop("disabled", true)
+            } else if(gp.game_state == "PLACE_TRANSFORMERS"){
+                $("#place-btn").html("Place Transformers")
+                $("#place-btn").prop("disabled", false)
+            }
+
+            if(gp.game_state == "WAIT_OPPONENT_TRANSFORMERS"){
+                $("#shoot-btn").html("Wait opponent's transformers")
+            } else if(gp.game_state == "ENTER_SALVOES"){
+                $("#shoot-btn").html("Shoot!")
+                $("#shoot-btn").prop("disabled", false)
+                $("#battle-log").html("Shoot! You've got "+gp.shots_left+" shots left.")
+                var missile = "<img src='styles/images/missile.png' class='missile'>"
+                $("#missile-field").html(missile.repeat(gp.shots_left))
+            } else if(gp.game_state == "WAIT_OPPONENT_SALVOES"){
+                $("#shoot-btn").html("Wait opponent's move")
+                $("#shoot-btn").prop("disabled", true)
+                $("#battle-log").html("Waiting opponent's move...")
+            }
+
+            if(gp.game_state == "WIN"){
+                if(currentPlayerData.side == "AUTOBOTS"){
+                   $("#win").addClass("autobots-victory")
+                } else {
+                    $("#win").addClass("decepticons-victory")
+                }
+                $("#play-field").hide(1000);
+                $("#win").show(1000);
+            } else if (gp.game_state == "LOSE"){
+                if(currentPlayerData.side == "AUTOBOTS"){
+                   $("#lose").addClass("autobots-defeated")
+                } else {
+                    $("#lose").addClass("decepticons-defeated")
+                }
+                $("#play-field").hide(1000);
+                $("#lose").show(1000);
+            } else if (gp.game_state == "DRAW"){
+                $("#draw").show(1000)
+            }
+        }
+    })
+}
+
+$(document).ready(function(){
+var timer;
+
+function checkForUpdates(gpId){
+    timer = setInterval(function() {
+        $.get("/api/game_view/"+gpId)
+        .done(function(data){
+           gridData = data;
+           getPlayers(gpId);
+           getSalvoesLocations();
+           checkGameState();
+        })
+
+    }, 5000);
+}
+
+checkForUpdates(getGpId(url));
+
+})
 
